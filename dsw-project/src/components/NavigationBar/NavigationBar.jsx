@@ -26,7 +26,7 @@ function NavigationBar({ content }) {
       <Navbar bg="dark" variant={"dark"} expand="lg">
         <Container fluid>
           <Navbar.Brand as={Link} to="/home">
-            8Clothes
+            Droneseta
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -43,7 +43,7 @@ function NavigationBar({ content }) {
               </Nav.Link>
               <NavDropdown title="Perfil" id="navbarScrollingDropdown">
                 <NavDropdown.Item as={Link} to="/orders">
-                  Pedidos
+                  Meus Pedidos
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/config">
                   Configurações
