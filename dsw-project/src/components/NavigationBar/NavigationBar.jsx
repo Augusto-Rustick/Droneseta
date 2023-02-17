@@ -9,17 +9,6 @@ import { useState } from "react";
 import "./App.css";
 
 function NavigationBar({ content }) {
-  const Clock = () => {
-    const [date, setDate] = useState(new Date());
-
-    function refreshClock() {
-      setDate(new Date());
-    }
-
-    const timerId = setInterval(refreshClock, 1000);
-
-    return <span>{date.toLocaleTimeString()}</span>;
-  };
 
   return (
     <div>
@@ -54,7 +43,6 @@ function NavigationBar({ content }) {
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href="#" disabled>
-                <Clock />
               </Nav.Link>
             </Nav>
             <Form className="d-flex">
