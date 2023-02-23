@@ -5,9 +5,10 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, Outlet } from "react-router-dom";
-import "./App.css";
+import "./NavigationBar.css";
 import React, { Suspense } from "react";
 import Image from "react-bootstrap/Image";
+import Footer from "../Footer/Footer";
 
 function NavigationBar() {
   const mode = "dark";
@@ -79,6 +80,7 @@ function NavigationBar() {
       <Suspense fallback={<p>Aguardando resposta do servidor</p>}>
         <Outlet />
       </Suspense>
+      <Footer/>
     </>
   );
 }

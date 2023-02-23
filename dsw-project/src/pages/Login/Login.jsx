@@ -15,7 +15,7 @@ const Login = () => {
   };
 
   let App = () => (
-    <div className="container">
+    <div className="container unblocked">
       <div className="login">
         <h1 className="text-center">Bem vindo!</h1>
         <form
@@ -89,7 +89,7 @@ const Login = () => {
 
   return (
     <>
-      <App></App>
+      <App/>
     </>
   );
 };
