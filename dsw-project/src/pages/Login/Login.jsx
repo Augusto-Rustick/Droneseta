@@ -1,17 +1,29 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm();
+  const { signin } = useAuth();
+  const navigate = useNavigate();
+
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    handleLogin(data)
+  };
+
+  const handleLogin = (data) => {
+    const res = signin(data.email, data.password);
+
+    if (res) {
+      console.log(res)
+      return;
+    }
+
+    alert("login efetuado com sucesso com sucesso!")
+    navigate("/home");
   };
 
   let App = () => (
@@ -48,8 +60,8 @@ const Login = () => {
               required
             />
             <Link to="/recover" htmlFor="username">
-                <p className="form-label">Esqueceu a senha?</p>
-              </Link>
+              <p className="form-label">Esqueceu a senha?</p>
+            </Link>
           </div>
           <div className="form-group form-check">
             <input
@@ -89,7 +101,7 @@ const Login = () => {
 
   return (
     <>
-      <App/>
+      <App />
     </>
   );
 };

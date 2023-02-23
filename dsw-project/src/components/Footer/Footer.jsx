@@ -7,26 +7,15 @@ import {
   MDBCol,
   MDBIcon,
 } from "mdb-react-ui-kit";
-import { SocialIcon } from "react-social-icons";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
 
 export default function Footer() {
   return (
     <MDBFooter bgColor="dark" className="text-center text-lg-start text-muted">
-      <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-        <div className="me-5 d-none d-lg-block">
-          <h3>Mais sobre o projeto:</h3>
-        </div>
-
-        <div>
-          <SocialIcon
-            bgColor="gray"
-            url="https://github.com/Augusto-Rustick/Droneseta"
-          />
-        </div>
-      </section>
-
       <section className="">
-        <MDBContainer className="text-center text-md-start mt-5 h-auto">
+        <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"/>
+        <MDBContainer className="text-center text-md-start mt-5 h-auto text-light bg-dark">
           <MDBRow className="mt-3">
             <MDBCol md="3" lg="4" xl="3" className="mx-auto py-5">
               <h6 className="text-uppercase fw-bold mb-4">
@@ -50,7 +39,7 @@ export default function Footer() {
               </p>
               <p>
                 <a href="/offers" className="text-reset">
-                    Ofertas
+                  Ofertas
                 </a>
               </p>
               <p>
@@ -78,9 +67,6 @@ export default function Footer() {
               <p>
                 <MDBIcon icon="phone" className="me-3" /> +00 (00)00000-0000
               </p>
-              <p>
-                <MDBIcon icon="print" className="me-3" /> +00 (00)00000-0000
-              </p>
             </MDBCol>
           </MDBRow>
         </MDBContainer>
@@ -92,7 +78,7 @@ export default function Footer() {
       >
         © 2023:
         <a className="text-reset fw-bold" href="/home">
-          Dronesseta
+          Droneseta
         </a>
       </div>
     </MDBFooter>

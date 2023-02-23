@@ -11,13 +11,15 @@
     "bootstrap-show-password-toggle": "^1.3.0",
     "jquery": "^3.6.3",
     "mdb-react-ui-kit": "^5.1.0",
+    "mdbreact": "^4.6.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.1",
     "react-router-dom": "^6.8.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-social-icons": "^5.15.0",
+    "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

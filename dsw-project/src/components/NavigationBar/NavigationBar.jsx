@@ -9,6 +9,8 @@ import "./NavigationBar.css";
 import React, { Suspense } from "react";
 import Image from "react-bootstrap/Image";
 import Footer from "../Footer/Footer";
+import GlobalStyle from "../styles/GlobalStyle";
+import Access from "./Access";
 
 function NavigationBar() {
   const mode = "dark";
@@ -41,11 +43,13 @@ function NavigationBar() {
                   Configurações
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/login">
-                  Entrar
-                </NavDropdown.Item>
+                <Access />
               </NavDropdown>
-              <Image src="./user.png" className="user" roundedCircle={true}></Image>
+              <Image
+                src="./user.png"
+                className="user"
+                roundedCircle={true}
+              ></Image>
               <Nav.Link href="#" disabled></Nav.Link>
             </Nav>
             <Form className="d-flex">
@@ -80,7 +84,8 @@ function NavigationBar() {
       <Suspense fallback={<p>Aguardando resposta do servidor</p>}>
         <Outlet />
       </Suspense>
-      <Footer/>
+      <Footer />
+      <GlobalStyle />
     </>
   );
 }
