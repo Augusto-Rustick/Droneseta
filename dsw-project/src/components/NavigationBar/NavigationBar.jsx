@@ -4,15 +4,17 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 import "./App.css";
+import React, { Suspense } from "react";
+import Image from "react-bootstrap/Image";
 
-function NavigationBar({ content }) {
+function NavigationBar() {
+  const mode = "dark";
 
-  return (
-    <div>
-      <Navbar bg="dark" variant={"dark"} expand="lg">
+  const NavBar = () => (
+    <>
+      <Navbar fixed="top" bg={mode} variant={mode} expand="lg">
         <Container fluid>
           <Navbar.Brand as={Link} to="/home">
             Droneseta
@@ -38,27 +40,46 @@ function NavigationBar({ content }) {
                   Configurações
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/Login">
+                <NavDropdown.Item as={Link} to="/login">
                   Entrar
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="#" disabled>
-              </Nav.Link>
+              <Image src="./user.png" className="user" roundedCircle={true}></Image>
+              <Nav.Link href="#" disabled></Nav.Link>
             </Nav>
             <Form className="d-flex">
               <Form.Control
                 type="search"
-                placeholder="Buscar"
+                placeholder="Search"
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success">Buscar</Button>
+              <Button variant="outline-success">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-search"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+              </Button>
             </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {content}
-    </div>
+    </>
+  );
+
+  return (
+    <>
+      <NavBar />
+      <Suspense fallback={<p>Aguardando resposta do servidor</p>}>
+        <Outlet />
+      </Suspense>
+    </>
   );
 }
 

@@ -2,13 +2,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import $ from "jquery";
 
 const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {

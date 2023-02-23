@@ -1,21 +1,16 @@
-@import "Scrollbar.css";
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     --login-card: #ffffff;
     --buttons: #00aa00;
-    --background: #ff7300e0;
   }
   
-  body {
+  .container {
     height: 100vh;
     width: 100%;
-    background-color: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
   }
-
-.user{
-  max-width: 40px;
-  max-height: 40px;
-}
