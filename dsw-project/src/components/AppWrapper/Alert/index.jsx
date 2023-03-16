@@ -1,7 +1,7 @@
 import Alert from "react-bootstrap/Alert";
 import Style from "./style";
 import useNotification from "../../../hooks/useNotification";
-import DynamicProgressBar from "./ProgressBar";
+import DynamicProgressBar from "./NotificationProgressBar";
 
 function AlertDismissibleNotification() {
   const { hideNotification, notification, show } = useNotification();

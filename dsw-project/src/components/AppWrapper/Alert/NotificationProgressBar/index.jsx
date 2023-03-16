@@ -4,7 +4,7 @@ import useNotification from "../../../../hooks/useNotification";
 
 function DynamicProgressBar({ variant, duration }) {
   const [progress, setProgress] = useState(100);
-  const { hideNotification, show } = useNotification();
+  const { hideNotification } = useNotification();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -24,7 +24,7 @@ function DynamicProgressBar({ variant, duration }) {
     }, 100);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [duration, hideNotification]);
 
   return <ProgressBar animated variant={variant} now={progress} />;
 }

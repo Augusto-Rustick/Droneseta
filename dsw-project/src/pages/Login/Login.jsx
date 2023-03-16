@@ -3,7 +3,6 @@ import "./Login.css";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import useNotification from "../../hooks/useNotification";
 
 const Login = () => {
   const { signin } = useAuth();

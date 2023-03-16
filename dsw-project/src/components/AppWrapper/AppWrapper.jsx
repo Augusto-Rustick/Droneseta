@@ -1,17 +1,17 @@
 import { Outlet } from "react-router-dom";
 import "./AppWrapper.css";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import Footer from "../Footer/Footer";
 import GlobalStyle from "../styles/GlobalStyle";
 import Loading from "../Loading/Loading";
-import NavBarTop from "./NavBar";
+import NavBarOffCanvas from "./NavBar";
 import AlertDismissibleNotification from "./Alert";
 
 function AppWrapper() {
 
   return (
     <>
-      <NavBarTop />
+      <NavBarOffCanvas />
       <Suspense fallback={<Loading />}>
         <Outlet />
       </Suspense>

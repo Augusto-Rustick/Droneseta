@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import AlertDismissibleNotification from "../components/AppWrapper/Alert";
 
 export const NotificationContext = createContext({});
