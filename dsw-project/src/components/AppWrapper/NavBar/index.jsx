@@ -1,21 +1,16 @@
+import Access from "./Access";
+import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link, Outlet } from "react-router-dom";
-import "./NavigationBar.css";
-import React, { Suspense } from "react";
-import Image from "react-bootstrap/Image";
-import Footer from "../Footer/Footer";
-import GlobalStyle from "../styles/GlobalStyle";
-import Access from "./Access";
+import { Link } from "react-router-dom";
 
-function NavigationBar() {
-  const mode = "dark";
-
-  const NavBar = () => (
+function NavBarTop() {
+const mode = "dark";
+  return (
     <>
       <Navbar fixed="top" bg={mode} variant={mode} expand="lg">
         <Container fluid>
@@ -77,17 +72,6 @@ function NavigationBar() {
       </Navbar>
     </>
   );
-
-  return (
-    <>
-      <NavBar />
-      <Suspense fallback={<p>Aguardando resposta do servidor</p>}>
-        <Outlet />
-      </Suspense>
-      <Footer />
-      <GlobalStyle />
-    </>
-  );
 }
 
-export default NavigationBar;
+export default NavBarTop;

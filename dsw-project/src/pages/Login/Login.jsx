@@ -3,28 +3,34 @@ import "./Login.css";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useNotification from "../../hooks/useNotification";
 
 const Login = () => {
   const { signin } = useAuth();
   const navigate = useNavigate();
-
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    handleLogin(data)
+    handleLogin(data);
   };
 
   const handleLogin = (data) => {
     const res = signin(data.email, data.password);
 
     if (res) {
-      console.log(res)
+      console.log(res);
       return;
     }
-
-    alert("login efetuado com sucesso com sucesso!")
     navigate("/home");
   };
+
+  function showPassword() {
+    let password = document.querySelector("#password");
+    password.setAttribute(
+      "type",
+      password.getAttribute("type") === "password" ? "text" : "password"
+    );
+  }
 
   let App = () => (
     <div className="container unblocked">
@@ -90,14 +96,6 @@ const Login = () => {
       </div>
     </div>
   );
-
-  function showPassword() {
-    let password = document.querySelector("#password");
-    password.setAttribute(
-      "type",
-      password.getAttribute("type") === "password" ? "text" : "password"
-    );
-  }
 
   return (
     <>
