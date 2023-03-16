@@ -5,7 +5,7 @@ import NotLogged from "../../pages/Login/NotLogged";
 import Register from "../../pages/Register/Register";
 import useAuth from "../../hooks/useAuth";
 
-const NavWrapper = lazy(() => import("../NavigationBar/NavigationBar"));
+const AppWrapper = lazy(() => import("../AppWrapper/AppWrapper"));
 const Home = lazy(() => import("../../pages/Home/Home"));
 const Login = lazy(() => import("../../pages/Login/Login"));
 const DevMenu = lazy(() => import("../../pages/DevMenu/DevMenu"));
@@ -20,7 +20,7 @@ function AppRoutes() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<NavWrapper />}>
+          <Route path="/" element={<AppWrapper />}>
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dev" element={<DevMenu />} />

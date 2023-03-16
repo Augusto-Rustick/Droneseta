@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
+import useNotification from "../hooks/useNotification";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const { showNotification } = useNotification();
 
   useEffect(() => {
     const userToken = localStorage.getItem("user_token");
@@ -32,11 +34,27 @@ export const AuthProvider = ({ children }) => {
         const token = Math.random().toString(36).substring(2);
         localStorage.setItem("user_token", JSON.stringify({ email, token }));
         setUser({ email, password });
+        showNotification({
+          type: "success",
+          title: "Sucesso!",
+          description:
+            "Autenticação realizada com sucesso! \n Bem vindo!",
+        });
         return;
       } else {
+        showNotification({
+          type: "danger",
+          title: "Fracassou!",
+          description: "A senha inserida está incorreta",
+        });
         return 401; // incorreto
       }
     } else {
+      showNotification({
+        type: "danger",
+        title: "Não encontrado!",
+        description: "O usuário inserido não existe",
+      });
       return 404; // não existente
     }
   };
@@ -66,7 +84,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signout = () => {
-    console.log("adnsqudhsyg")
+    showNotification({
+      type: "info",
+      title: "Sucesso!",
+      description: "Você foi desconectado com sucesso",
+    });
     setUser(null);
     localStorage.removeItem("user_token");
   };
