@@ -1,29 +1,30 @@
 import React from "react";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import Nav from "react-bootstrap/Nav";
 import useAuth from "../../../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 
-const Access = () => {
+const Access = ({onClick}) => {
   const { signed, signout } = useAuth();
   const navigate = useNavigate();
 
   function handleSignOut(){
     signout()
     navigate("/login")
+    onClick()
   }
 
   if (!signed) {
     return (
       <>
-        <NavDropdown.Item as={Link} to="/login">
+        <Nav.Link as={Link} to="/login" onClick={onClick}>
           Entrar
-        </NavDropdown.Item>
+        </Nav.Link>
       </>
     );
   } else {
     return (
       <>
-        <NavDropdown.Item onClick={handleSignOut}>Sair</NavDropdown.Item>
+        <Nav.Link onClick={handleSignOut}>Sair</Nav.Link>
       </>
     );
   }

@@ -5,9 +5,10 @@ const Style = createGlobalStyle`
     .Alert {
         top: 75px;
         left: 25px;
-        max-width: 250px;
-        min-width: 250px;
+        max-width: 300px;
+        min-width: 300px;
         position: absolute;
+        z-index: 1;
     }
 
 `;
