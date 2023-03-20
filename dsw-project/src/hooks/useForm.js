@@ -1,5 +1,5 @@
-import api from '../services/api';
-import { useState, useEffect } from 'react';
+import api from "../utils/api";
+import { useState, useEffect } from "react";
 
 const useForm = (callback, initialState, url, dataFormater) => {
   const [data, setData] = useState(initialState);
@@ -10,9 +10,9 @@ const useForm = (callback, initialState, url, dataFormater) => {
       setLoading(true);
       try {
         const result = await api.get(url);
-        if(dataFormater){
+        if (dataFormater) {
           setData(dataFormater(result.data));
-        }else{
+        } else {
           setData(result.data);
         }
       } catch (error) {
@@ -25,7 +25,7 @@ const useForm = (callback, initialState, url, dataFormater) => {
     }
   }, [url, dataFormater]);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { target } = event;
     const { name, value } = target;
     const auxData = { ...data };
@@ -43,14 +43,13 @@ const useForm = (callback, initialState, url, dataFormater) => {
     const auxData = { ...data };
     if (auxData[name] === value) {
       auxData[name] = null;
-    }
-    else {
+    } else {
       auxData[name] = value;
     }
     setData(auxData);
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     if (event) {
       event.preventDefault();
     }
@@ -59,12 +58,57 @@ const useForm = (callback, initialState, url, dataFormater) => {
     setLoading(false);
   };
 
-  const handleFileChange = event => {
-    const file = event.target.files[0];
+  const handleFileChange = (event) => {
+    const files = event.target.files;
     const { name } = event.target;
     const tempData = { ...data };
-    tempData[name] = file;
+    tempData[name] = files;
     setData(tempData);
+  };
+
+  const handleImageChange = (event, optionalEvent, optionalFiles) => {
+    if (event) {
+      const files = event.target.files;
+      const blobFiles = [];
+      Array.prototype.forEach.call(files, function (file) {
+        imageToBlob(file).then((blob) => {
+          blobFiles.push(blob);
+        });
+      });
+      const { name } = event.target;
+      const tempData = { ...data };
+      tempData[name] = blobFiles;
+      setData(tempData);
+    } else {
+      const files = optionalFiles;
+      const { name } = optionalEvent.target;
+      const tempData = { ...data };
+      tempData[name] = files;
+      setData(tempData);
+    }
+
+    function imageToBlob(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const img = new Image();
+          img.src = reader.result;
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob((blob) => {
+              resolve(blob);
+            }, file.type);
+          };
+        };
+        reader.onerror = reject;
+      });
+    }
+
   };
 
   const handleDateChange = (date, name) => {
@@ -82,10 +126,11 @@ const useForm = (callback, initialState, url, dataFormater) => {
       setData,
       handleSelectChange,
       handleFileChange,
+      handleImageChange,
       handleDateChange,
       setLoading,
-      handleSelectChangeRadioOption
-    }
+      handleSelectChangeRadioOption,
+    },
   ];
 };
 

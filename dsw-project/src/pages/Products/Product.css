@@ -1,6 +1,8 @@
   .p-100{
-    padding-top: 200px;
-    padding-bottom: 200px;
+    /* padding-top: 75px;
+    padding-bottom: 75px; */
+    padding-top: 15vh;
+    padding-bottom: 10vh;
     padding-left: 5%;
     padding-right: 5%;
   }
