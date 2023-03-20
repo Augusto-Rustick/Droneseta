@@ -1,36 +1,72 @@
 import { createContext, useState } from "react";
 import AlertDismissibleNotification from "../components/AppWrapper/Alert";
+import { v4 as uuidv4 } from "uuid";
 
 export const NotificationContext = createContext({});
 
+const NotificationsType = {
+  danger: "danger",
+  info: "info",
+  warning: "warning",
+  success: "success",
+};
+
 export const NotificationProvider = ({ children }) => {
-  const [notification, setNotification] = useState();
-  const [show, setShow] = useState();
+  const [notifications, setNotifications] = useState([]);
 
   const showNotification = ({
     type = "danger",
     title = "Error",
     description = "Error description",
-    ticketLenght = 3,
-    duration = 1000 * ticketLenght,
+    ticketLength = 5,
+    duration = 1000 * ticketLength,
   }) => {
-    setShow(false);
-    setTimeout(() => {
-      setNotification({ type, title, description, ticketLenght, duration });
-      setShow(true);
-    }, 25);
+
+    const newNotification = {
+      id: uuidv4(),
+      type,
+      title,
+      description,
+      ticketLength,
+      duration,
+    };
+
+    setNotifications((prevNotifications) => [
+      ...prevNotifications,
+      newNotification,
+    ]);
+
   };
 
-  const hideNotification = () => {
-    setShow(false);
-    setNotification(null);
+  const hideNotification = (notificationId) => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.filter((n) => n.id !== notificationId)
+    );
   };
 
   return (
     <NotificationContext.Provider
-      value={{ hideNotification, showNotification, notification, show }}
+      value={{ hideNotification, showNotification, notifications, NotificationsType }}
     >
-      <AlertDismissibleNotification />
+      <div
+        style={{
+          top: "75px",
+          left: "25px",
+          maxWidth: "300px",
+          minWidth: "300px",
+          position: "absolute",
+          zIndex: 999,
+        }}
+      >
+        {notifications.map((notification) => (
+          <AlertDismissibleNotification
+            key={notification.id}
+            hideNotification={() => hideNotification(notification.id)}
+            notification={notification}
+            show={true}
+          />
+        ))}
+      </div>
       {children}
     </NotificationContext.Provider>
   );

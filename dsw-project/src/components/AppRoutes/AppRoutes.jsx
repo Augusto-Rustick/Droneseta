@@ -9,11 +9,18 @@ const AppWrapper = lazy(() => import("../AppWrapper/AppWrapper"));
 const Home = lazy(() => import("../../pages/Home/Home"));
 const Login = lazy(() => import("../../pages/Login/Login"));
 const DevMenu = lazy(() => import("../../pages/DevMenu/DevMenu"));
+const NewProduct = lazy(() => import("../../pages/Products/Form"));
 
 function AppRoutes() {
   const ComponentHandler = ({ comp }) => {
     const { signed } = useAuth();
-    return signed ? comp : <NotLogged />;
+    let component;
+    if (signed) {
+      component = comp;
+    } else {
+      component = <NotLogged />;
+    }
+    return component;
   };
 
   return (
@@ -39,6 +46,10 @@ function AppRoutes() {
             <Route
               path="/products"
               element={<ComponentHandler comp={<p>Teste</p>} />}
+            />
+            <Route
+              path="/products/new"
+              element={<ComponentHandler comp={<NewProduct />} />}
             />
             <Route path="/register" element={<Register />} />
             <Route

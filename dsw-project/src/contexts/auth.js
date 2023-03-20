@@ -5,7 +5,7 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
-  const { showNotification } = useNotification();
+  const { showNotification, NotificationsType } = useNotification();
 
   useEffect(() => {
     const userToken = localStorage.getItem("user_token");
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user_token", JSON.stringify({ email, token }));
         setUser({ email, password });
         showNotification({
-          type: "success",
+          type: NotificationsType.success,
           title: "Sucesso!",
           description:
             "Autenticação realizada com sucesso! \n Bem vindo!",
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
           title: "Fracassou!",
           description: "A senha inserida está incorreta",
         });
-        return 401; // incorreto
+        return 401;
       }
     } else {
       showNotification({
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
         title: "Não encontrado!",
         description: "O usuário inserido não existe",
       });
-      return 404; // não existente
+      return 404;
     }
   };
 
