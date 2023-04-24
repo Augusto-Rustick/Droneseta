@@ -12,45 +12,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import dsw.trabalho_final.spring_project.Entity.Usuario;
-import dsw.trabalho_final.spring_project.Repository.UsuarioRepository;
+
+import dsw.trabalho_final.spring_project.Entity.Pessoa;
+import dsw.trabalho_final.spring_project.Repository.PessoaRepository;
 import jakarta.validation.Valid;
 
 @RestController
-public class UsuarioResource {
-    private UsuarioRepository repo;
+public class PessoaResource {
+    private PessoaRepository repo;
 
-    public UsuarioResource(UsuarioRepository repo) {
+    public PessoaResource(PessoaRepository repo) {
         this.repo = repo;
     }
 
 
-    @PostMapping("/usuario/insert")
-    public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody Usuario usuario) {
-        Usuario savedCar = repo.save(usuario);
+    @PostMapping("/pessoa/insert")
+    public ResponseEntity<Pessoa> createPessoa(@Valid @RequestBody Pessoa pessoa) {
+    	Pessoa savedPessoa= repo.save(pessoa);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id)")
-                .buildAndExpand(savedCar.getId())
+                .buildAndExpand(savedPessoa.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/usuario/list")
-    public List<Usuario> allUsuarios() {
+    @GetMapping("/pessoa/list")
+    public List<Pessoa> allPessoas() {
         return repo.findAll();
     }
 
-    @GetMapping("/usuario/get/{id}")
-    public Usuario getUsuario(@PathVariable int id) throws Exception{
-        Optional<Usuario> usuario = repo.findById(id);
-        if(usuario.isEmpty()) {
+    @GetMapping("/pessoa/get/{id}")
+    public Pessoa getPessoa(@PathVariable int id) throws Exception{
+        Optional<Pessoa> pessoa = repo.findById(id);
+        if(pessoa.isEmpty()) {
             throw new Exception("erro no id: " + id);
         }
-        return usuario.get();
+        return pessoa.get();
     }
 
-    @DeleteMapping("/usuario/delete/{id}")
-    public void deleteUsuario(@PathVariable int id) {
+    @DeleteMapping("/pessoa/delete/{id}")
+    public void deletePessoa(@PathVariable int id) {
         repo.deleteById(id);
-
     }
 }

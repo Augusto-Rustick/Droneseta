@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class Usuario {
+public class Pessoa {
     @Id
     @GeneratedValue
     private Integer id;
@@ -21,10 +21,10 @@ public class Usuario {
     @NotNull
     protected Boolean is_admin;
 
-    public Usuario() {
+    public Pessoa() {
     }
 
-    public Usuario(Integer id, String email, String senha, Boolean is_admin) {
+    public Pessoa(Integer id, String email, String senha, Boolean is_admin) {
         this.id = id;
         this.email = email;
         this.senha = senha;
