@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class Pessoa {
+public abstract class Pessoa {
     @Id
     @GeneratedValue
     private Integer id;

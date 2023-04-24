@@ -19,16 +19,15 @@ import jakarta.validation.Valid;
 
 @RestController
 public class PessoaResource {
-    private PessoaRepository repo;
+    protected PessoaRepository pessoaRepo;
 
-    public PessoaResource(PessoaRepository repo) {
-        this.repo = repo;
+    public PessoaResource(PessoaRepository pessoaRepo) {
+        this.pessoaRepo = pessoaRepo;
     }
-
 
     @PostMapping("/pessoa/insert")
     public ResponseEntity<Pessoa> createPessoa(@Valid @RequestBody Pessoa pessoa) {
-    	Pessoa savedPessoa= repo.save(pessoa);
+    	Pessoa savedPessoa= pessoaRepo.save(pessoa);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id)")
                 .buildAndExpand(savedPessoa.getId())
                 .toUri();
@@ -37,12 +36,12 @@ public class PessoaResource {
 
     @GetMapping("/pessoa/list")
     public List<Pessoa> allPessoas() {
-        return repo.findAll();
+        return pessoaRepo.findAll();
     }
 
     @GetMapping("/pessoa/get/{id}")
     public Pessoa getPessoa(@PathVariable int id) throws Exception{
-        Optional<Pessoa> pessoa = repo.findById(id);
+        Optional<Pessoa> pessoa = pessoaRepo.findById(id);
         if(pessoa.isEmpty()) {
             throw new Exception("erro no id: " + id);
         }
@@ -51,6 +50,6 @@ public class PessoaResource {
 
     @DeleteMapping("/pessoa/delete/{id}")
     public void deletePessoa(@PathVariable int id) {
-        repo.deleteById(id);
+    	pessoaRepo.deleteById(id);
     }
 }
