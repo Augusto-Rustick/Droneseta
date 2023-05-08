@@ -8,7 +8,7 @@ public class Administrador extends Pessoa{
 	public Administrador() {
     }
 
-    public Administrador(Integer id, String email, String senha) {
-        super(id, email, senha, true);
+    public Administrador(Integer id, String usuario, String senha) {
+        super(id, usuario, senha, true);
     }
 }

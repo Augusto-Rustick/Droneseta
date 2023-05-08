@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import useNotification from "../hooks/useNotification";
+import axios from 'axios';
 
 export const AuthContext = createContext({});
 
@@ -59,28 +60,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = (email, password) => {
-    const userStorage = localStorage.getItem("user_db");
-
-    const hasUser = JSON.parse(userStorage)?.filter(
-      (user) => user.email === email
-    );
-
-    if (hasUser?.length) {
-      return 401; // já existe
+  async function createUser(usuario, senha) {
+    const url = 'http://localhost:8080/cliente/insert';
+    const data = { usuario, senha, is_admin: false };
+  
+    try {
+      const response = await axios.post(url, data);
+      return response;
+    } catch (error) {
+      return error;
     }
-
-    let newUser;
-
-    if (userStorage) {
-      newUser = [...userStorage, { email, password }];
-    } else {
-      newUser = [{ email, password }];
-    }
-
-    localStorage.setItem("user_db", JSON.stringify(newUser));
-
-    return;
+  }
+  
+  const signup = async (user, password) => {
+    const response = await createUser(user, password);
+    localStorage.setItem("cliente_logado", JSON.stringify(response.data));
+    return response;
   };
 
   const signout = () => {

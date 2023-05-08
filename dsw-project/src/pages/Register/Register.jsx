@@ -10,18 +10,21 @@ const Register = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignup = (data) => {
-    const res = signup(data.email, data.password);
+  const handleSignup = async (data) => {
+    const res = await signup(data.user, data.password);
 
+    console.log(res)
+    console.log(JSON.parse(localStorage.getItem("cliente_logado")));
     if (res) {
-      if (res === 401){
-        setFieldState({"user" : errorTypes.UserAlreadyExists})
+      if (res.status === 401) {
+        setFieldState({ "user": errorTypes.UserAlreadyExists })
+      }
+      if (res.status === 201) {
+        alert("usuário cadastrado com sucesso!")
+        navigate("/home");
       }
       return;
     }
-
-    alert("usuário cadastrado com sucesso!")
-    navigate("/home");
   };
 
 
@@ -30,7 +33,7 @@ const Register = () => {
     PasswordInvalid: "",
     PasswordTooshort: "A senha deve ter no minímo 6 caractéres!",
     UserInvalid: "O nome de usuário deve conter um email válido!",
-    UserAlreadyExists : "O usuário informado já foi cadastrado!",
+    UserAlreadyExists: "O usuário informado já foi cadastrado!",
     None: "",
   };
 
@@ -44,7 +47,7 @@ const Register = () => {
 
   const onSubmit = (data) => {
     let isValid = checkData(data);
-    if (isValid){
+    if (isValid) {
       handleSignup(data)
     }
   };
@@ -75,7 +78,7 @@ const Register = () => {
               className="form-control"
               type="password"
               name="new-password"
-              autocomplete="new-password"
+              autoComplete="new-password"
               security=""
               id="password"
               {...register("password")}
@@ -112,26 +115,28 @@ const Register = () => {
   );
 
   function checkData(data) {
-    let isValid = true;
-    if (!data.user.includes("@")) {
-      setFieldState({ user: errorTypes.UserInvalid });
-      isValid = false;
-    } else if (data.password.length < 6) {
-      setFieldState({ "password-group original": errorTypes.PasswordTooshort });
-      isValid = false;
-    } else if (data.password !== data.passwordRepeat) {
-      setFieldState({ "password-group repeat": errorTypes.PasswordUnmatch });
-      isValid = false;
-    } else {
-      setFieldState({
-        user: "",
-        "password-group original": "",
-        "password-group repeat": "",
-      });
+    const { user, password, passwordRepeat } = data;
+    const errors = {};
+
+    if (password.length < 6) {
+      errors["password-group original"] = errorTypes.PasswordTooshort;
     }
+
+    if (password !== passwordRepeat) {
+      errors["password-group repeat"] = errorTypes.PasswordUnmatch;
+    }
+
+    const isValid = Object.keys(errors).length === 0;
+
+    setFieldState({
+      user: errors.user || "",
+      "password-group original": errors["password-group original"] || "",
+      "password-group repeat": errors["password-group repeat"] || "",
+    });
 
     return isValid;
   }
+
 
   return (
     <>

@@ -1,8 +1,11 @@
 package dsw.trabalho_final.spring_project.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -12,8 +15,9 @@ public abstract class Pessoa {
     @GeneratedValue
     private Integer id;
 
-    @NotNull
-    protected String email;
+    @NotBlank
+    @Column(unique = true)
+    protected String usuario;
 
     @NotNull
     protected String senha;
@@ -24,9 +28,9 @@ public abstract class Pessoa {
     public Pessoa() {
     }
 
-    public Pessoa(Integer id, String email, String senha, Boolean is_admin) {
+    public Pessoa(Integer id, String usuario, String senha, Boolean is_admin) {
         this.id = id;
-        this.email = email;
+        this.usuario = usuario;
         this.senha = senha;
         this.is_admin = is_admin;
     }
@@ -39,12 +43,12 @@ public abstract class Pessoa {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getSenha() {
@@ -65,9 +69,9 @@ public abstract class Pessoa {
 
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "User{" +
                 "id=" + id +
-                ", email='" + email + '\'' +
+                ", usuario='" + usuario + '\'' +
                 ", senha='" + senha + '\'' +
                 ", is_admin=" + is_admin +
                 '}';

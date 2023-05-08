@@ -8,7 +8,7 @@ public class Cliente extends Pessoa{
 	public Cliente() {
     }
 
-    public Cliente(Integer id, String email, String senha) {
-        super(id, email, senha, true);
+    public Cliente(Integer id, String usuario, String senha) {
+        super(id, usuario, senha, true);
     }
 }
