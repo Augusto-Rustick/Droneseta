@@ -13,15 +13,14 @@ const Register = () => {
   const handleSignup = async (data) => {
     const res = await signup(data.user, data.password);
 
-    console.log(res)
-    console.log(JSON.parse(localStorage.getItem("cliente_logado")));
+    console.log(res.status)
     if (res) {
-      if (res.status === 401) {
+      if (res.status === 400) {
         setFieldState({ "user": errorTypes.UserAlreadyExists })
       }
       if (res.status === 201) {
         alert("usuário cadastrado com sucesso!")
-        navigate("/home");
+        navigate("/login");
       }
       return;
     }

@@ -105,11 +105,11 @@ function NavBarOffCanvas() {
                 />
                 <hr style={{marginTop:'-3px', marginBottom:'-3px', backgroundColor:'gray', height:'5px'}}/>
                 <br />
-                <Image
-                  src="./user.png"
+                {/* <Image
+                  src="/images/user.png"
                   className="user"
                   roundedCircle={true}
-                ></Image>
+                ></Image> */}
                 <Nav.Link href="#" disabled></Nav.Link>
               </Nav>
               {/* <Form className="d-flex">

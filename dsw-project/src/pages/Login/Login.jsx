@@ -1,11 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { signin } = useAuth();
+  const { signin  } = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
@@ -13,15 +14,20 @@ const Login = () => {
     handleLogin(data);
   };
 
-  const handleLogin = (data) => {
-    const res = signin(data.email, data.password);
+  const handleLogin = async (data) => {
+    const res = await signin(data.user, data.password);
 
-    if (res) {
-      console.log(res);
+    if (res.status === 400 || res.data.senha != data.password) {
+      setFieldState({ "user": 'Usuário ou senha incorretas' })
       return;
     }
+
+    const token = Math.random().toString(36).substring(2);
+    localStorage.setItem("user_logged", JSON.stringify({ user: res.data, token }));
+    console.log(localStorage.getItem("user_logged"))
     navigate("/home");
   };
+
 
   function showPassword() {
     let password = document.querySelector("#password");
@@ -30,6 +36,11 @@ const Login = () => {
       password.getAttribute("type") === "password" ? "text" : "password"
     );
   }
+
+  const [fieldStates, setFieldState] = useState({
+    user: "",
+    password: "",
+  });
 
   let App = () => (
     <div className="container unblocked">
@@ -51,6 +62,7 @@ const Login = () => {
               {...register("user")}
               required
             />
+            <div className="text-danger text-sm-left">{fieldStates["user"]}</div>
           </div>
           <div className="form-group is-validated" id="password-group">
             <label className="form-label" htmlFor="password">

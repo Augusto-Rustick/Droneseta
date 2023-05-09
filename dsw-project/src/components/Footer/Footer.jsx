@@ -23,10 +23,10 @@ export default function Footer() {
                 Descrição
               </h6>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-                temporibus quas sed asperiores, officia atque ipsa nobis facere
-                recusandae et quaerat omnis voluptatum nemo id ipsam incidunt.
-                Possimus, doloremque perferendis.
+              Somos uma empresa especializada em soluções tecnológicas para o seu negócio. 
+              Oferecemos serviços de desenvolvimento web, mobile e desktop, além de consultoria em TI. 
+              Nossa equipe é formada por profissionais experientes e apaixonados pelo que fazem. Juntos, 
+              podemos transformar a sua ideia em realidade.
               </p>
             </MDBCol>
 

@@ -23,58 +23,30 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const signin = (email, password) => {
-    const userStorage = localStorage.getItem("user_db");
-
-    const hasUser = JSON.parse(userStorage)?.filter(
-      (user) => user.email === email
-    );
-
-    if (hasUser?.length) {
-      if (hasUser[0].email === email && hasUser[0].password === password) {
-        const token = Math.random().toString(36).substring(2);
-        localStorage.setItem("user_token", JSON.stringify({ email, token }));
-        setUser({ email, password });
-        showNotification({
-          type: "success",
-          title: "Sucesso!",
-          description:
-            "Autenticação realizada com sucesso! \n Bem vindo!",
-        });
-        return;
-      } else {
-        showNotification({
-          type: "danger",
-          title: "Fracassou!",
-          description: "A senha inserida está incorreta",
-        });
-        return 401; // incorreto
-      }
-    } else {
-      showNotification({
-        type: "danger",
-        title: "Não encontrado!",
-        description: "O usuário inserido não existe",
-      });
-      return 404; // não existente
+  const signin = async (usuario, senha) => {
+    let response = null
+    const url = 'http://localhost:8080/cliente/get/' + usuario;
+    try {
+      response = await axios.get(url);
+    } catch (error) {
+      response = error.response;
     }
+
+    return response;
   };
 
-  async function createUser(usuario, senha) {
+
+  const signup = async (usuario, senha) => {
+    let response = null
     const url = 'http://localhost:8080/cliente/insert';
     const data = { usuario, senha, is_admin: false };
-  
+
     try {
-      const response = await axios.post(url, data);
-      return response;
+      response = await axios.post(url, data);
     } catch (error) {
-      return error;
+      response = error.response;
     }
-  }
-  
-  const signup = async (user, password) => {
-    const response = await createUser(user, password);
-    localStorage.setItem("cliente_logado", JSON.stringify(response.data));
+
     return response;
   };
 
@@ -85,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       description: "Você foi desconectado com sucesso",
     });
     setUser(null);
-    localStorage.removeItem("user_token");
+    localStorage.removeItem("user_logged");
   };
 
   return (

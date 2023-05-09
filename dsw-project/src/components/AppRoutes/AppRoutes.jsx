@@ -13,7 +13,8 @@ const DevMenu = lazy(() => import("../../pages/DevMenu/DevMenu"));
 function AppRoutes() {
   const ComponentHandler = ({ comp }) => {
     const { signed } = useAuth();
-    return signed ? comp : <NotLogged />;
+    let user = localStorage.getItem("user_logged");
+    return user ? comp : <NotLogged />;
   };
 
   return (

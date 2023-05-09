@@ -30,10 +30,12 @@ public class ClienteResource {
 	}
 
 	@PostMapping("/cliente/insert")
-	public ResponseEntity<Cliente> createCliente(@Valid @RequestBody Cliente cliente) throws Exception {
+	public ResponseEntity<?> createCliente(@Valid @RequestBody Cliente cliente) throws Exception {
+		if (clienteRepo.findByUser(cliente.getUsuario()) != null) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nome de usuário já cadastrado no sistema.");
+	    }
 	    Cliente savedCliente = clienteRepo.save(cliente);
-	    savedCliente.setId(savedCliente.getId()); // atribui o id do cliente salvo ao objeto Cliente
-	    return ResponseEntity.status(HttpStatus.CREATED).body(savedCliente); // retorna o cliente criado com o status 201
+	    return ResponseEntity.status(HttpStatus.CREATED).body(savedCliente); 
 	}
 
 	@GetMapping("/cliente/list")
@@ -41,14 +43,16 @@ public class ClienteResource {
 		return clienteRepo.findAll();
 	}
 
-	@GetMapping("/cliente/get/{id}")
-	public Cliente getCliente(@PathVariable int id) throws Exception {
-		Optional<Cliente> cliente = clienteRepo.findById(id);
-		if (cliente.isEmpty()) {
-			throw new Exception("erro no id: " + id);
-		}
-		return cliente.get();
+	@GetMapping("/cliente/get/{usuario}")
+	public ResponseEntity<?> getCliente(@PathVariable String usuario) {
+	    Optional<Cliente> clienteOptional = Optional.ofNullable(clienteRepo.findByUser(usuario));
+	    if (!clienteOptional.isPresent()) {
+	        return ResponseEntity.badRequest().body("Não foi possível encontrar uma conta com esse usuário");
+	    }
+	    Cliente cliente = clienteOptional.get();
+	    return ResponseEntity.ok(cliente);
 	}
+
 
 	@DeleteMapping("/cliente/delete/{id}")
 	public void deleteCliente(@PathVariable int id) {
