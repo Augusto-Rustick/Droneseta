@@ -12,5 +12,5 @@ Lembrar de Sincronizar dependências:
 
 - Abrir uma IDE java
 - Abrir o PgAdmin
-- Configurar o aplication.properies com o usuário, senha e banco de dados
-- Executar o arquivo DswSpringProjectApplication
+- Configurar o  ```aplication.properies``` com o usuário, senha e banco de dados
+- Executar o arquivo ```DswSpringProjectApplication.java```
