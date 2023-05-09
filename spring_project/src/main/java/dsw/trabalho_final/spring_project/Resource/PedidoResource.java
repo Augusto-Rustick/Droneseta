@@ -17,7 +17,7 @@ import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-public class PedidoResource  {
+public class PedidoResource {
 
 	private PedidoRepository repo;
 

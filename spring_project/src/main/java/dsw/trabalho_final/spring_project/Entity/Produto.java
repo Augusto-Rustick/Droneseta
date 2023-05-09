@@ -17,10 +17,10 @@ public class Produto {
 
 	@NotNull
 	private String codigo;
-	
+
 	@NotNull
 	private String tamanho;
-	
+
 	@NotNull
 	private double preco;
 

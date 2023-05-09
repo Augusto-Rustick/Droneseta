@@ -14,13 +14,13 @@ public class Pedido {
 
 	@NotNull
 	protected Integer cliente;
-	
+
 	@NotNull
 	protected Integer produto;
-	
+
 	@NotNull
 	protected Integer quantidade;
-	
+
 	@NotNull
 	protected Integer situacao;
 
