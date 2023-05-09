@@ -12,43 +12,43 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import dsw.trabalho_final.spring_project.Entity.Cartao;
-import dsw.trabalho_final.spring_project.Repository.CartaoRepository;
+import dsw.trabalho_final.spring_project.Entity.Produto;
+import dsw.trabalho_final.spring_project.Repository.ProdutoRepository;
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-public class CartaoResource {
+public class ProdutoResource {
 
-	private CartaoRepository repo;
+	private ProdutoRepository repo;
 
-	public CartaoResource(CartaoRepository repo) {
+	public ProdutoResource(ProdutoRepository repo) {
 		this.repo = repo;
 	}
 	
-	@PostMapping("/cartao/insert")
-	public ResponseEntity<?> createCartao(@Valid @RequestBody Cartao cartao) throws Exception {
-		Cartao savedCartao= repo.save(cartao);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedCartao);
+	@PostMapping("/produto/insert")
+	public ResponseEntity<?> createProduto(@Valid @RequestBody Produto produto) throws Exception {
+		Produto savedProduto= repo.save(produto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(savedProduto);
 	}
 
-	@GetMapping("/cartao/list")
-	public List<Cartao> allCartao() {
+	@GetMapping("/produto/list")
+	public List<Produto> allProduto() {
 		return repo.findAll();
 	}
 
-	@GetMapping("/cartao/get/{id}")
-	public ResponseEntity<?> getCartao(@PathVariable Integer id) {
-		Optional<Cartao> cartaoOptional = repo.findById(id);
-		if (!cartaoOptional.isPresent()) {
+	@GetMapping("/produto/get/{id}")
+	public ResponseEntity<?> getProduto(@PathVariable Integer id) {
+		Optional<Produto> produtoOptional = repo.findById(id);
+		if (!produtoOptional.isPresent()) {
 			return ResponseEntity.badRequest().body("Não foi possível encontrar uma conta com esse usuário");
 		}
-		Cartao cartao = cartaoOptional.get();
-		return ResponseEntity.ok(cartao);
+		Produto produto = produtoOptional.get();
+		return ResponseEntity.ok(produto);
 	}
 
-	@DeleteMapping("/cartao/delete/{id}")
-	public void deleteCartao(@PathVariable int id) {
+	@DeleteMapping("/produto/delete/{id}")
+	public void deleteProduto(@PathVariable int id) {
 		repo.deleteById(id);
 	}
 }

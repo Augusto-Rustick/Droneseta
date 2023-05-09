@@ -19,29 +19,29 @@ import jakarta.validation.Valid;
 @RestController
 public class ClienteResource {
 
-	private ClienteRepository clienteRepo;
+	private ClienteRepository repo;
 
-	public ClienteResource(ClienteRepository clienteRepo) {
-		this.clienteRepo = clienteRepo;
+	public ClienteResource(ClienteRepository repo) {
+		this.repo = repo;
 	}
 
 	@PostMapping("/cliente/insert")
 	public ResponseEntity<?> createCliente(@Valid @RequestBody Cliente cliente) throws Exception {
-		if (clienteRepo.findByUser(cliente.getUsuario()) != null) {
+		if (repo.findByUser(cliente.getUsuario()) != null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nome de usuário já cadastrado no sistema.");
 		}
-		Cliente savedCliente = clienteRepo.save(cliente);
+		Cliente savedCliente = repo.save(cliente);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedCliente);
 	}
 
 	@GetMapping("/cliente/list")
 	public List<Cliente> allCliente() {
-		return clienteRepo.findAll();
+		return repo.findAll();
 	}
 
 	@GetMapping("/cliente/get/{usuario}")
 	public ResponseEntity<?> getCliente(@PathVariable String usuario) {
-		Optional<Cliente> clienteOptional = Optional.ofNullable(clienteRepo.findByUser(usuario));
+		Optional<Cliente> clienteOptional = Optional.ofNullable(repo.findByUser(usuario));
 		if (!clienteOptional.isPresent()) {
 			return ResponseEntity.badRequest().body("Não foi possível encontrar uma conta com esse usuário");
 		}
@@ -51,7 +51,7 @@ public class ClienteResource {
 
 	@DeleteMapping("/cliente/delete/{id}")
 	public void deleteCliente(@PathVariable int id) {
-		clienteRepo.deleteById(id);
+		repo.deleteById(id);
 	}
 
 }

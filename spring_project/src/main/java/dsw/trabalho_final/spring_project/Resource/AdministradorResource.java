@@ -19,29 +19,29 @@ import jakarta.validation.Valid;
 @RestController
 public class AdministradorResource {
 
-	private AdministradorRepository adminRepo;
+	private AdministradorRepository repo;
 
-	public AdministradorResource(AdministradorRepository adminRepo) {
-		this.adminRepo = adminRepo;
+	public AdministradorResource(AdministradorRepository repo) {
+		this.repo = repo;
 	}
 
 	@PostMapping("/administrador/insert")
 	public ResponseEntity<?> createAdministrador(@Valid @RequestBody Administrador administrador) throws Exception {
-		if (adminRepo.findByUser(administrador.getUsuario()) != null) {
+		if (repo.findByUser(administrador.getUsuario()) != null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nome de usuário já cadastrado no sistema.");
 		}
-		Administrador savedAdmin = adminRepo.save(administrador);
+		Administrador savedAdmin = repo.save(administrador);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedAdmin);
 	}
 
 	@GetMapping("/administrador/list")
 	public List<Administrador> allAdministrador() {
-		return adminRepo.findAll();
+		return repo.findAll();
 	}
 
 	@GetMapping("/administrador/get/{usuario}")
 	public ResponseEntity<?> getAdministrador(@PathVariable String usuario) {
-		Optional<Administrador> administradorOptional = Optional.ofNullable(adminRepo.findByUser(usuario));
+		Optional<Administrador> administradorOptional = Optional.ofNullable(repo.findByUser(usuario));
 		if (!administradorOptional.isPresent()) {
 			return ResponseEntity.badRequest().body("Não foi possível encontrar uma conta com esse usuário");
 		}
@@ -51,7 +51,7 @@ public class AdministradorResource {
 
 	@DeleteMapping("/administrador/delete/{id}")
 	public void deleteAdministrador(@PathVariable int id) {
-		adminRepo.deleteById(id);
+		repo.deleteById(id);
 	}
 
 }
