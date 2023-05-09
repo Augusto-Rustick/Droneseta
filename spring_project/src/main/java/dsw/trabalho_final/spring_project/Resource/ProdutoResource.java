@@ -25,10 +25,10 @@ public class ProdutoResource {
 	public ProdutoResource(ProdutoRepository repo) {
 		this.repo = repo;
 	}
-	
+
 	@PostMapping("/produto/insert")
 	public ResponseEntity<?> createProduto(@Valid @RequestBody Produto produto) throws Exception {
-		Produto savedProduto= repo.save(produto);
+		Produto savedProduto = repo.save(produto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedProduto);
 	}
 

@@ -2,7 +2,6 @@ package dsw.trabalho_final.spring_project.Resource;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,43 +11,43 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import dsw.trabalho_final.spring_project.Entity.Cartao;
-import dsw.trabalho_final.spring_project.Repository.CartaoRepository;
+import dsw.trabalho_final.spring_project.Entity.Pedido;
+import dsw.trabalho_final.spring_project.Repository.PedidoRepository;
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-public class CartaoResource {
+public class PedidoResource  {
 
-	private CartaoRepository repo;
+	private PedidoRepository repo;
 
-	public CartaoResource(CartaoRepository repo) {
+	public PedidoResource(PedidoRepository repo) {
 		this.repo = repo;
 	}
 
-	@PostMapping("/cartao/insert")
-	public ResponseEntity<?> createCartao(@Valid @RequestBody Cartao cartao) throws Exception {
-		Cartao savedCartao = repo.save(cartao);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedCartao);
+	@PostMapping("/pedido/insert")
+	public ResponseEntity<?> createPedido(@Valid @RequestBody Pedido pedido) throws Exception {
+		Pedido savedPedido = repo.save(pedido);
+		return ResponseEntity.status(HttpStatus.CREATED).body(savedPedido);
 	}
 
-	@GetMapping("/cartao/list")
-	public List<Cartao> allCartao() {
+	@GetMapping("/pedido/list")
+	public List<Pedido> allPedido() {
 		return repo.findAll();
 	}
 
-	@GetMapping("/cartao/get/{id}")
-	public ResponseEntity<?> getCartao(@PathVariable Integer id) {
-		Optional<Cartao> cartaoOptional = repo.findById(id);
-		if (!cartaoOptional.isPresent()) {
+	@GetMapping("/pedido/get/{id}")
+	public ResponseEntity<?> getPedido(@PathVariable Integer id) {
+		Optional<Pedido> pedidoOptional = repo.findById(id);
+		if (!pedidoOptional.isPresent()) {
 			return ResponseEntity.badRequest().body("Não foi possível encontrar uma conta com esse usuário");
 		}
-		Cartao cartao = cartaoOptional.get();
-		return ResponseEntity.ok(cartao);
+		Pedido pedido = pedidoOptional.get();
+		return ResponseEntity.ok(pedido);
 	}
 
-	@DeleteMapping("/cartao/delete/{id}")
-	public void deleteCartao(@PathVariable int id) {
+	@DeleteMapping("/pedido/delete/{id}")
+	public void deletePedido(@PathVariable int id) {
 		repo.deleteById(id);
 	}
 }
