@@ -1,11 +1,7 @@
 import Access from "./Access";
-import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -41,7 +37,7 @@ function NavBarOffCanvas() {
             id={`offcanvasNavbar-expand-${expand}`}
             aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
             placement="end"
-            style={{backgroundColor: "rgba(255,255,255)", borderLeft: '100px solid rgba(0,0,0,0)' }}
+            style={{ backgroundColor: "rgba(255,255,255)", borderLeft: '100px solid rgba(0,0,0,0)' }}
           >
             <Offcanvas.Header
               closeButton
@@ -66,7 +62,7 @@ function NavBarOffCanvas() {
                 >
                   Produtos
                 </Nav.Link>
-                <hr style={{marginTop:'-3px', marginBottom:'-3px', backgroundColor:'gray', height:'5px'}}/>
+                <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
                 <Nav.Link
                   onClick={() => {
                     handleDissmis();
@@ -76,7 +72,7 @@ function NavBarOffCanvas() {
                 >
                   Ofertas
                 </Nav.Link>
-                <hr style={{marginTop:'-3px', marginBottom:'-3px', backgroundColor:'gray', height:'5px'}}/>
+                <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
                 <Nav.Link
                   onClick={() => {
                     handleDissmis();
@@ -86,7 +82,7 @@ function NavBarOffCanvas() {
                 >
                   Pedidos
                 </Nav.Link>
-                <hr style={{marginTop:'-3px', marginBottom:'-3px', backgroundColor:'gray', height:'5px'}}/>
+                <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
                 <Nav.Link
                   // style={{ padding:'2px',border: '1px solid black', backgroundColor: 'grey', textAlign:'center', top: '50%', borderRadius: '5px', height:'35px' }}
                   onClick={() => {
@@ -97,13 +93,13 @@ function NavBarOffCanvas() {
                 >
                   Configurações
                 </Nav.Link>
-                <hr style={{marginTop:'-3px', marginBottom:'-3px', backgroundColor:'gray', height:'5px'}}/>
+                <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
                 <Access
                   onClick={() => {
                     handleDissmis();
                   }}
                 />
-                <hr style={{marginTop:'-3px', marginBottom:'-3px', backgroundColor:'gray', height:'5px'}}/>
+                <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
                 <br />
                 {/* <Image
                   src="/images/user.png"

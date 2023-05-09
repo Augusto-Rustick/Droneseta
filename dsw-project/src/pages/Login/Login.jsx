@@ -17,7 +17,7 @@ const Login = () => {
   const handleLogin = async (data) => {
     const res = await signin(data.user, data.password);
 
-    if (res.status === 400 || res.data.senha != data.password) {
+    if (res.status === 400 || res.data.senha !== data.password) {
       setFieldState({ "user": 'Usuário ou senha incorretas' })
       return;
     }
@@ -76,9 +76,6 @@ const Login = () => {
               {...register("password")}
               required
             />
-            <Link to="/recover" htmlFor="username">
-              <p className="form-label">Esqueceu a senha?</p>
-            </Link>
           </div>
           <div className="form-group form-check">
             <input

@@ -3,17 +3,17 @@ import Nav from "react-bootstrap/Nav";
 import useAuth from "../../../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 
-const Access = ({onClick}) => {
-  const { signed, signout } = useAuth();
+const Access = ({ onClick }) => {
+  const { signout } = useAuth();
   const navigate = useNavigate();
 
-  function handleSignOut(){
+  function handleSignOut() {
     signout()
     navigate("/login")
     onClick()
   }
 
-  if (!signed) {
+  if (!localStorage.getItem('user_logged')) {
     return (
       <>
         <Nav.Link as={Link} to="/login" onClick={onClick}>
