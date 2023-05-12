@@ -4,6 +4,9 @@ import React, { lazy } from "react";
 import NotLogged from "../../pages/Login/NotLogged";
 import Register from "../../pages/Register/Register";
 import useAuth from "../../hooks/useAuth";
+import Seeder from "../../pages/Seeder/Seeder";
+import Produto from "../../pages/Produto/Produto";
+
 
 const AppWrapper = lazy(() => import("../AppWrapper/AppWrapper"));
 const Home = lazy(() => import("../../pages/Home/Home"));
@@ -25,6 +28,8 @@ function AppRoutes() {
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dev" element={<DevMenu />} />
+            <Route path="/seeder" element={<Seeder />} />
+            <Route path="/produto" element={<Produto />} />
             <Route
               path="/orders"
               element={<ComponentHandler comp={<p>Teste</p>} />}
@@ -35,10 +40,6 @@ function AppRoutes() {
             />
             <Route
               path="/offers"
-              element={<ComponentHandler comp={<p>Teste</p>} />}
-            />
-            <Route
-              path="/products"
               element={<ComponentHandler comp={<p>Teste</p>} />}
             />
             <Route path="/register" element={<Register />} />

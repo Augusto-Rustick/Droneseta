@@ -58,7 +58,7 @@ function NavBarOffCanvas() {
                     handleDissmis();
                   }}
                   as={Link}
-                  to="/products"
+                  to="/produto"
                 >
                   Produtos
                 </Nav.Link>
