@@ -8,78 +8,95 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Produto {
 
-	@Id
-	@GeneratedValue
-	private Integer id;
+   @Id
+   @GeneratedValue
+   private Integer id;
 
-	@NotNull
-	private String nome;
+   @NotNull
+   private String nome;
 
-	@NotNull
-	private String codigo;
+   @NotNull
+   private String codigo;
 
-	@NotNull
-	private String tamanho;
+   @NotNull
+   private String tamanho;
 
-	@NotNull
-	private double preco;
+   @NotNull
+   private double preco;
 
-	public Produto() {
-	}
+   @NotNull
+   private String tipo;
 
-	public Produto(Integer id, String nome, String codigo, String tamanho, double preco) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.codigo = codigo;
-		this.tamanho = tamanho;
-		this.preco = preco;
-	}
+   public Produto() {
+   }
 
-	public Integer getId() {
-		return id;
-	}
+   public Produto(Integer id, String nome, String codigo, String tamanho, double preco, String tipo) {
+      super();
+      this.id = id;
+      this.nome = nome;
+      this.codigo = codigo;
+      this.tamanho = tamanho;
+      this.preco = preco;
+      this.tipo = tipo;
+   }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+   public Integer getId() {
+      return id;
+   }
 
-	public String getNome() {
-		return nome;
-	}
+   public void setId(Integer id) {
+      this.id = id;
+   }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+   public String getNome() {
+      return nome;
+   }
 
-	public String getCodigo() {
-		return codigo;
-	}
+   public void setNome(String nome) {
+      this.nome = nome;
+   }
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
+   public String getCodigo() {
+      return codigo;
+   }
 
-	public String getTamanho() {
-		return tamanho;
-	}
+   public void setCodigo(String codigo) {
+      this.codigo = codigo;
+   }
 
-	public void setTamanho(String tamanho) {
-		this.tamanho = tamanho;
-	}
+   public String getTamanho() {
+      return tamanho;
+   }
 
-	public double getPreco() {
-		return preco;
-	}
+   public void setTamanho(String tamanho) {
+      this.tamanho = tamanho;
+   }
 
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
+   public double getPreco() {
+      return preco;
+   }
 
-	@Override
-	public String toString() {
-		return "Camisa [id=" + id + ", nome=" + nome + ", codigo=" + codigo + ", tamanho=" + tamanho + ", preco="
-				+ preco + "]";
-	}
+   public void setPreco(double preco) {
+      this.preco = preco;
+   }
 
+   public String getTipo() {
+      return tipo;
+   }
+
+   public void setTipo(String tipo) {
+      this.tipo = tipo;
+   }
+
+   @Override
+   public String toString() {
+      return "Produto{" +
+              "id=" + id +
+              ", nome='" + nome + '\'' +
+              ", codigo='" + codigo + '\'' +
+              ", tamanho='" + tamanho + '\'' +
+              ", preco=" + preco +
+              ", tipo='" + tipo + '\'' +
+              '}';
+   }
 }

@@ -34,6 +34,7 @@ const SeederList = ({ data }) => {
                         tamanho: tamanhoItem,
                         preco: preco,
                         codigo: codigo,
+                        tipo: tipoItem
                     };
 
                     quantidade++;
