@@ -18,8 +18,13 @@ const NewProduct = lazy(() => import("../../pages/Produto/Form"));
 function AppRoutes() {
   const ComponentHandler = ({ comp }) => {
     const { signed } = useAuth();
-    let user = localStorage.getItem("user_logged");
-    return user ? comp : <NotLogged />;
+    let component;
+    if (signed) {
+      component = comp;
+    } else {
+      component = <NotLogged />;
+    }
+    return component;
   };
 
   return (
@@ -33,7 +38,7 @@ function AppRoutes() {
             <Route path="/seeder" element={<Seeder />} />
             <Route path="/produto" element={<Produto />} />
             <Route
-              path="/products/new"
+              path="/produto/novo"
               element={<ComponentHandler comp={<NewProduct />} />}
             />
             <Route path="/carrinho" element={<Carrinho />} />
