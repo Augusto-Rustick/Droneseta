@@ -13,6 +13,7 @@ const AppWrapper = lazy(() => import("../AppWrapper/AppWrapper"));
 const Home = lazy(() => import("../../pages/Home/Home"));
 const Login = lazy(() => import("../../pages/Login/Login"));
 const DevMenu = lazy(() => import("../../pages/DevMenu/DevMenu"));
+const NewProduct = lazy(() => import("../../pages/Produto/Form"));
 
 function AppRoutes() {
   const ComponentHandler = ({ comp }) => {
@@ -31,6 +32,10 @@ function AppRoutes() {
             <Route path="/dev" element={<DevMenu />} />
             <Route path="/seeder" element={<Seeder />} />
             <Route path="/produto" element={<Produto />} />
+            <Route
+              path="/products/new"
+              element={<ComponentHandler comp={<NewProduct />} />}
+            />
             <Route path="/carrinho" element={<Carrinho />} />
             
             <Route
