@@ -14,12 +14,18 @@ const AppWrapper = lazy(() => import("../AppWrapper/AppWrapper"));
 const Home = lazy(() => import("../../pages/Home/Home"));
 const Login = lazy(() => import("../../pages/Login/Login"));
 const DevMenu = lazy(() => import("../../pages/DevMenu/DevMenu"));
+const NewProduct = lazy(() => import("../../pages/Produto/Form"));
 
 function AppRoutes() {
   const ComponentHandler = ({ comp }) => {
     const { signed } = useAuth();
-    let user = localStorage.getItem("user_logged");
-    return user ? comp : <NotLogged />;
+    let component;
+    if (signed) {
+      component = comp;
+    } else {
+      component = <NotLogged />;
+    }
+    return component;
   };
 
   return (
@@ -32,6 +38,10 @@ function AppRoutes() {
             <Route path="/dev" element={<DevMenu />} />
             <Route path="/seeder" element={<Seeder />} />
             <Route path="/produto" element={<Produto />} />
+            <Route
+              path="/produto/novo"
+              element={<ComponentHandler comp={<NewProduct />} />}
+            />
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/configuracoes" element={<Configuracoes />} />
             
