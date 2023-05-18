@@ -11,7 +11,6 @@ const Seeder = () => {
 
     const handleButtonClick = (id) => {
         // Lógica para lidar com o clique do botão
-        console.log(`Botão ${id} clicado`);
     };
 
     return (

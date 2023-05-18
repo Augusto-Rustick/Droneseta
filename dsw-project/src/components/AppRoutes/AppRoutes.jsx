@@ -7,6 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import Seeder from "../../pages/Seeder/Seeder";
 import Produto from "../../pages/Produto/Produto";
 import Carrinho from "../../pages/Carrinho/Carrinho";
+import Configuracoes from "../../pages/Configuracoes/Configuracoes";
 
 
 const AppWrapper = lazy(() => import("../AppWrapper/AppWrapper"));
@@ -32,6 +33,7 @@ function AppRoutes() {
             <Route path="/seeder" element={<Seeder />} />
             <Route path="/produto" element={<Produto />} />
             <Route path="/carrinho" element={<Carrinho />} />
+            <Route path="/configuracoes" element={<Configuracoes />} />
             
             <Route
               path="/about"
@@ -42,10 +44,6 @@ function AppRoutes() {
               element={<ComponentHandler comp={<p>Teste</p>} />}
             />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/config"
-              element={<ComponentHandler comp={<p>Teste</p>} />}
-            />
           </Route>
         </Routes>
       </BrowserRouter>

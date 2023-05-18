@@ -13,7 +13,6 @@ const Register = () => {
   const handleSignup = async (data) => {
     const res = await signup(data.user, data.password);
 
-    console.log(res.status)
     if (res) {
       if (res.status === 400) {
         setFieldState({ "user": errorTypes.UserAlreadyExists })

@@ -68,16 +68,11 @@ const ProductScreen = () => {
         let response = null
         const data = { cliente: parsedUserLogged.user.id, produto, quantidade, situacao: 1 }
         const url = 'http://localhost:8080/pedido/insert';
-
-        console.log(data)
-
         try {
             response = await axios.post(url, data);
         } catch (error) {
             response = error.response;
         }
-
-        console.log(response)
     }
 
 

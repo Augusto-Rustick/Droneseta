@@ -15,7 +15,6 @@ const SeederList = ({ data }) => {
         const insertProduto = async (data) => {
             try {
                 const response = await axios.post(url, data);
-                console.log(response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -42,8 +41,6 @@ const SeederList = ({ data }) => {
                 });
             });
         });
-
-        console.log(quantidade);
     };
 
     const createPessoa = async (nome, isAdmin, url) => {
@@ -63,7 +60,6 @@ const SeederList = ({ data }) => {
 
         try {
             const response = await axios.post(url, data);
-            console.log(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -77,7 +73,6 @@ const SeederList = ({ data }) => {
                 const nome = nomes[i];
                 await createPessoa(nome, false, url);
             }
-            console.log('Criação de clientes concluída.');
         } catch (error) {
             console.error('Erro ao criar clientes:', error);
         }
@@ -87,7 +82,6 @@ const SeederList = ({ data }) => {
         const nomeAdmin = 'admin';
         const url = 'http://localhost:8080/administrador/insert';
         await createPessoa(nomeAdmin, true, url);
-        console.log('Criação de admin concluída.');
     };
 
     const handleClickButton4 = async () => {
@@ -105,7 +99,6 @@ const SeederList = ({ data }) => {
             );
 
             await Promise.all(ordersPromises);
-            console.log('Pedidos criados com sucesso!');
         } catch (error) {
             console.error('Erro ao criar pedidos:', error);
         }
@@ -120,7 +113,6 @@ const SeederList = ({ data }) => {
                     requests.push(axios.delete(url1 + i));
                 }
                 await Promise.all(requests);
-                console.log('Exclusão de produtos concluída.');
             } catch (error) {
                 console.error('Erro ao excluir produtos:', error);
             }

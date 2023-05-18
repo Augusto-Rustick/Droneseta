@@ -105,7 +105,7 @@ function NavBarOffCanvas() {
                     handleDissmis();
                   }}
                   as={Link}
-                  to="/config"
+                  to="/configuracoes"
                 >
                   Configurações
                 </Nav.Link>

@@ -24,7 +24,6 @@ const Login = () => {
 
     const token = Math.random().toString(36).substring(2);
     localStorage.setItem("user_logged", JSON.stringify({ user: res.data, token }));
-    console.log(localStorage.getItem("user_logged"))
     navigate("/home");
   };
 

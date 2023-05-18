@@ -44,7 +44,6 @@ const CartScreen = () => {
       );
 
       await Promise.all(ordersPromises);
-      console.log('Pedidos criados com sucesso!');
     } catch (error) {
       console.error('Erro ao criar pedidos:', error);
     }
