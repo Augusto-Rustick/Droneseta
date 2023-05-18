@@ -1,0 +1,18 @@
+  .p-100{
+    /* padding-top: 75px;
+    padding-bottom: 75px; */
+    padding-top: 15vh;
+    padding-bottom: 10vh;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .form-container {
+    background-color: #f1f1f1;
+    width: 80%;
+    margin: auto;
+  }
+  
+  
+
+  
