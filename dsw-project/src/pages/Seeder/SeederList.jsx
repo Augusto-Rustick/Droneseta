@@ -48,7 +48,7 @@ const SeederList = ({ data }) => {
 
     const createPessoa = async (nome, isAdmin, url) => {
         const usuario = `${nome.toLowerCase()}`;
-        const senha = isAdmin ? usuario : '123123';
+        const senha = '123123';
         const is_admin = isAdmin;
         const endereco = 'Endereço de exemplo';
         const email = `${usuario}@example.com`;
@@ -84,10 +84,31 @@ const SeederList = ({ data }) => {
     };
 
     const handleClickButton3 = async () => {
-        const nomeAdmin = 'Admin';
+        const nomeAdmin = 'admin';
         const url = 'http://localhost:8080/administrador/insert';
         await createPessoa(nomeAdmin, true, url);
         console.log('Criação de admin concluída.');
+    };
+
+    const handleClickButton4 = async () => {
+        try {
+            const userId = 1;
+            const productIds = [16, 17, 18, 20, 21, 22]; 
+
+            const ordersPromises = productIds.map(productId =>
+                axios.post('http://localhost:8080/pedido/insert', {
+                    cliente: userId,
+                    produto: productId,
+                    quantidade: 1,
+                    situacao: 1,
+                })
+            );
+
+            await Promise.all(ordersPromises);
+            console.log('Pedidos criados com sucesso!');
+        } catch (error) {
+            console.error('Erro ao criar pedidos:', error);
+        }
     };
 
     const remove = () => {
@@ -122,6 +143,9 @@ const SeederList = ({ data }) => {
                         )}
                         {item.id === 3 && (
                             <button onClick={handleClickButton3}>{item.buttonText}</button>
+                        )}
+                        {item.id === 4 && (
+                            <button onClick={handleClickButton4}>{item.buttonText}</button>
                         )}
                     </div>
                 </div>

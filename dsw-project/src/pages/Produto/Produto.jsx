@@ -3,15 +3,15 @@ import axios from 'axios';
 
 const ProductScreen = () => {
     const [camisas, setCamisas] = useState([]);
-    const [camisaOriginal, setCamisaOriginal] = useState(null);
-    const user = localStorage.getItem('user_logged');
+    const [camisasOriginais, setCamisasOriginais] = useState(null);
+    const user_logged = localStorage.getItem('user_logged');
 
     useEffect(() => {
         axios
             .get('http://localhost:8080/produto/list')
             .then(response => {
                 const data = response.data;
-                setCamisaOriginal(data);
+                setCamisasOriginais(data);
 
                 // Verificar se há códigos duplicados
                 const uniqueCamisas = [];
@@ -61,6 +61,26 @@ const ProductScreen = () => {
         });
     };
 
+
+    const adicionarCarrinho = async (produto, quantidade) => {
+        const parsedUserLogged = JSON.parse(user_logged);
+
+        let response = null
+        const data = { cliente: parsedUserLogged.user.id, produto, quantidade, situacao: 1 }
+        const url = 'http://localhost:8080/pedido/insert';
+
+        console.log(data)
+
+        try {
+            response = await axios.post(url, data);
+        } catch (error) {
+            response = error.response;
+        }
+
+        console.log(response)
+    }
+
+
     const handleButtonClick = (tamanho, codigo, quantidade) => {
         if (!tamanho) {
             alert('Informe um tamanho para adicionar o produto ao carrinho');
@@ -68,13 +88,13 @@ const ProductScreen = () => {
         }
 
         quantidade = Math.floor(quantidade)
-        if(quantidade < 1){
+        if (quantidade < 1) {
             alert('Informe uma quantidade de camisas para comprar.');
             return;
         }
 
         tamanho = tamanho.length === 1 ? `_${tamanho}` : tamanho;
-        const camisaEncontrada = camisaOriginal.find(
+        const camisaEncontrada = camisasOriginais.find(
             camisa => camisa.tamanho === tamanho && camisa.codigo === codigo
         );
         if (!camisaEncontrada) {
@@ -88,8 +108,9 @@ const ProductScreen = () => {
             'foi adicionada ao carrinho com quantidade: ' +
             quantidade
         );
-    };
 
+        adicionarCarrinho(camisaEncontrada.id, quantidade)
+    };
 
     return (
         <div style={styles.container}>
@@ -105,7 +126,7 @@ const ProductScreen = () => {
                             <p style={styles.nome}>{camisa.nome + ((camisa.codigo.startsWith("F")) ? " Feminina" : " Masculina")}</p>
                             <p style={styles.modelo}>Modelo: {camisa.modelo}</p>
                             <p style={styles.preco}>Preço: R$ {camisa.preco}</p>
-                            {user && (
+                            {user_logged && (
                                 <>
                                     <hr style={styles.separator} />
                                     <div style={styles.tamanhoContainer}>
@@ -209,7 +230,7 @@ const styles = {
     tamanhoLabel: {
         margin: '0px 5px'
     },
-    quantidadeInput:{
+    quantidadeInput: {
         marginLeft: '10px',
         width: '40px',
     },

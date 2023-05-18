@@ -4,13 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import dsw.trabalho_final.spring_project.Entity.Pedido;
 import dsw.trabalho_final.spring_project.Repository.PedidoRepository;
 import jakarta.validation.Valid;
@@ -34,6 +28,17 @@ public class PedidoResource {
 	@GetMapping("/pedido/list")
 	public List<Pedido> allPedido() {
 		return repo.findAll();
+	}
+
+	@GetMapping("/pedido/listUser/{id}")
+	public List<Pedido> allPedidoByCliente(@PathVariable Integer id) {
+		return repo.findByClienteId(id);
+	}
+
+	@PutMapping("/pedido/update/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizarSituacaoPedido(@PathVariable Integer id) {
+		repo.atualizarSituacaoPedido(id);
 	}
 
 	@GetMapping("/pedido/get/{id}")

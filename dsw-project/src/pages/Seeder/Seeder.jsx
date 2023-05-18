@@ -6,6 +6,7 @@ const Seeder = () => {
         { id: 1, text: 'Povoar camisa ', buttonText: 'Povoar' },
         { id: 2, text: 'Povoar clientes  ', buttonText: 'Povoar' },
         { id: 3, text: 'Povoar admins    ', buttonText: 'Povoar' },
+        { id: 4, text: 'Povoar pedidos  ', buttonText: 'Povoar' },
     ];
 
     const handleButtonClick = (id) => {

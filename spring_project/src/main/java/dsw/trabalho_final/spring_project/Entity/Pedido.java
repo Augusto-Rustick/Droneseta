@@ -3,6 +3,7 @@ package dsw.trabalho_final.spring_project.Entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -13,6 +14,7 @@ public class Pedido {
 	private Integer id;
 
 	@NotNull
+	@JoinColumn(name = "cliente_id")
 	protected Integer cliente;
 
 	@NotNull
@@ -27,12 +29,12 @@ public class Pedido {
 	public Pedido() {
 	}
 
-	public Pedido(Integer id, Integer cliente, Integer produto, Integer quantidade) {
+	public Pedido(Integer id, Integer cliente, Integer produto, Integer quantidade, Integer situacao) {
 		this.id = id;
 		this.cliente = cliente;
 		this.produto = produto;
 		this.quantidade = quantidade;
-		this.situacao = 1;
+		this.situacao = situacao;
 	}
 
 	public Integer getId() {
