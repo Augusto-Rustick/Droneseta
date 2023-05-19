@@ -10,7 +10,6 @@ const CartScreen = () => {
       try {
         const response = await axios.get('http://localhost:8080/pedido/listBySituacao/2');
         setPedidos(response.data);
-
         // Calcular o total do preço
         const total = response.data.reduce((acc, item) => {
           return acc + item.quantidade * 49.90;
@@ -25,13 +24,56 @@ const CartScreen = () => {
   }, []);
 
   const handleEntregaPurchase = async () => {
-    // try {
-
-    // } catch (error) {
-    //   console.error('Erro ao criar pedidos:', error);
-    // }
+    // Ordenar os pedidos em ordem decrescente de quantidade
+    const sortedPedidos = [...pedidos].sort((a, b) => b.quantidade - a.quantidade);
+  
+    const capacidadeDrone = 10; // Capacidade do drone em camisetas
+    const viagens = []; // Lista de viagens realizadas pelo drone
+  
+    // Percorrer os pedidos e realizar o bin packing
+    for (const pedido of sortedPedidos) {
+      const quantidade = pedido.quantidade;
+  
+      // Procurar o bin (viagem) existente com menor capacidade disponível
+      let menorCapacidade = Infinity;
+      let melhorViagem = null;
+  
+      for (const viagem of viagens) {
+        const capacidadeDisponivel = capacidadeDrone - viagem.quantidadeTransportada;
+        if (quantidade <= capacidadeDisponivel && capacidadeDisponivel < menorCapacidade) {
+          menorCapacidade = capacidadeDisponivel;
+          melhorViagem = viagem;
+        }
+      }
+  
+      if (melhorViagem) {
+        // Adicionar o pedido à viagem existente
+        melhorViagem.pedidos.push(pedido);
+        melhorViagem.quantidadeTransportada += quantidade;
+      } else {
+        // Criar uma nova viagem para o pedido
+        viagens.push({
+          pedidos: [pedido],
+          quantidadeTransportada: quantidade
+        });
+      }
+    }
+  
+    // Exibir o relatório de viagens e quantidade de camisetas transportadas
+    for (let i = 0; i < viagens.length; i++) {
+      const viagem = viagens[i];
+      console.log(`Viagem ${i + 1}:`);
+      console.log(`- Quantidade de camisetas transportadas: ${viagem.quantidadeTransportada}`);
+      console.log('- Pedidos:');
+      for (const pedido of viagem.pedidos) {
+        console.log(`  - Pedido ${pedido.id}: ${pedido.quantidade} camisetas`);
+      }
+      console.log();
+    }
+  
     alert('Compra finalizada com sucesso!');
   };
+  
 
   return (
     <div style={styles.container}>
@@ -45,6 +87,7 @@ const CartScreen = () => {
               {pedidos.map(item => (
                 <li key={item.id} style={styles.cartItem}>
                   <span style={styles.productCode}>Código do Produto: {item.produto}</span>
+                  <span style={styles.productCode}>Cliente: {item.cliente}</span>
                   <span style={styles.quantity}>Quantidade: {item.quantidade}</span>
                 </li>
               ))}
