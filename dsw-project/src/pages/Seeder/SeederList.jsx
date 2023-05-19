@@ -106,7 +106,7 @@ const SeederList = ({ data }) => {
                 axios.post('http://localhost:8080/pedido/insert', {
                     cliente: userId,
                     produto: productId,
-                    quantidade: 1,
+                    quantidade: (Math.floor(Math.random() * 10) + 1),
                     situacao: 1,
                 })
             );
@@ -126,14 +126,10 @@ const SeederList = ({ data }) => {
 
         try {
             for (let i = 0; i < 5; i++) {
-                numero += i
-                cvc += i
-                validade += i
-
                 const data = {
-                    numero,
-                    cvc,
-                    validade,
+                    numero: (numero + i),
+                    cvc: (cvc + i),
+                    validade: (validade + i),
                     cliente: userId
                 }
                 const response = await axios.post(url, data);

@@ -3,7 +3,9 @@ import axios from 'axios';
 
 const CartScreen = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [cartoes, setCartoes] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [selectedCard, setSelectedCard] = useState('');
   const user = JSON.parse(localStorage.getItem("user_logged"));
 
   useEffect(() => {
@@ -22,7 +24,18 @@ const CartScreen = () => {
       }
     };
 
+    const fetchCartoes = async () => {
+      try {
+        const url = 'http://localhost:8080/cartao/listUser/' + user.user.id
+        const response = await axios.get(url);
+        setCartoes(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchCartItems();
+    fetchCartoes();
   }, []);
 
   const handleRemoveFromCart = async (itemId) => {
@@ -46,6 +59,12 @@ const CartScreen = () => {
 
   const handleFinalizePurchase = async () => {
     try {
+      // Verificar se um cartão foi selecionado
+      if (!selectedCard) {
+        alert('Selecione um cartão para finalizar a compra.');
+        return;
+      }
+
       const ordersPromises = cartItems.map(item =>
         axios.post('http://localhost:8080/pedido/insert', {
           id: item.id,
@@ -53,6 +72,7 @@ const CartScreen = () => {
           produto: item.produto,
           quantidade: item.quantidade,
           situacao: 2,
+          cartao: selectedCard,
         })
       );
 
@@ -85,6 +105,16 @@ const CartScreen = () => {
             ))}
           </ul>
           <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
+          <select
+            value={selectedCard}
+            onChange={(e) => setSelectedCard(e.target.value)}
+            style={styles.cardSelect}
+          >
+            <option value="">Selecione um cartão</option>
+            <option value="cartao1">Cartão 1</option>
+            <option value="cartao2">Cartão 2</option>
+            <option value="cartao3">Cartão 3</option>
+          </select>
           <button
             style={styles.finalizeButton}
             onClick={handleFinalizePurchase}
@@ -143,6 +173,14 @@ const styles = {
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
+  },
+  cardSelect: {
+    marginTop: '10px',
+    marginBottom: '100px',
+    padding: '5px',
+    borderRadius: '4px',
+    marginLeft: 'auto',
+    display: 'block',
   },
   finalizeButton: {
     marginTop: '20px',
