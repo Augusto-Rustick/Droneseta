@@ -24,16 +24,24 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signin = async (usuario, senha) => {
-    let response = null
-    const url = 'http://localhost:8080/cliente/get/' + usuario;
+    let response = null;
+    const urlCliente = 'http://localhost:8080/cliente/get/' + usuario;
+    const urlAdmin = 'http://localhost:8080/administrador/get/' + usuario;
+  
     try {
-      response = await axios.get(url);
+      response = await axios.get(urlCliente);
     } catch (error) {
-      response = error.response;
+      // Se ocorrer um erro ao buscar o cliente, tentar buscar pelo administrador
+      try {
+        response = await axios.get(urlAdmin);
+      } catch (error) {
+        response = error.response;
+      }
     }
-
+  
     return response;
   };
+  
 
 
   const signup = async (usuario, senha) => {

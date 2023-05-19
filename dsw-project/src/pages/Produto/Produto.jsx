@@ -4,7 +4,7 @@ import axios from 'axios';
 const ProductScreen = () => {
     const [camisas, setCamisas] = useState([]);
     const [camisasOriginais, setCamisasOriginais] = useState(null);
-    const user_logged = localStorage.getItem('user_logged');
+    const user_logged = JSON.parse(localStorage.getItem('user_logged'));
 
     useEffect(() => {
         axios
@@ -62,7 +62,7 @@ const ProductScreen = () => {
 
 
     const adicionarCarrinho = async (produto, quantidade) => {
-        const parsedUserLogged = JSON.parse(user_logged);
+        const parsedUserLogged = user_logged;
 
         let response = null
         const data = { cliente: parsedUserLogged.user.id, produto, quantidade, situacao: 1 }
@@ -72,6 +72,8 @@ const ProductScreen = () => {
         } catch (error) {
             response = error.response;
         }
+
+        console.log(response);
     }
 
 
@@ -103,7 +105,7 @@ const ProductScreen = () => {
         alert(
             'A ' +
             camisaEncontrada.nome +
-            (camisaEncontrada.tipo == 'F' ? ' Feminina ' : ' Masculina ') +
+            (camisaEncontrada.tipo === 'F' ? ' Feminina ' : ' Masculina ') +
             'foi adicionada ao carrinho com quantidade: ' +
             quantidade
         );
@@ -125,7 +127,7 @@ const ProductScreen = () => {
                             <p style={styles.nome}>{camisa.nome + ((camisa.codigo.startsWith("F")) ? " Feminina" : " Masculina")}</p>
                             <p style={styles.descricao}>{camisa.descricao}</p>
                             <p style={styles.preco}>Preço: R$ {camisa.preco}</p>
-                            {user_logged && (
+                            {(user_logged && !user_logged.user.is_admin) && (
                                 <>
                                     <hr style={styles.separator} />
                                     <div style={styles.tamanhoContainer}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import "./Product.css";
+import "./Form.css";
 import { Row, Col, InputGroup } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
 

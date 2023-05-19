@@ -45,9 +45,8 @@ function AppRoutes() {
             <Route path="/cartao" element={<Cartao />} />
             <Route path="/cartao-cadastro" element={<CartaoCadastro />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/produto/novo" element={<NewProduct />} />
 
-            <Route path="/produto/novo" element={<ComponentHandler comp={<NewProduct />} />} />
-            
             <Route
               path="/about"
               element={<ComponentHandler comp={<p>Teste</p>} />}
