@@ -11,7 +11,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	Cliente findByUser(String usuario);
 
 	@Modifying
-	@Query("UPDATE Cliente c SET c.usuario = :usuario, c.senha = :senha, c.endereco = :endereco, c.email = :email WHERE c.id = :id")
-	void atualizarCliente(Integer id, String usuario, String senha, String endereco, String email);
+	@Query("UPDATE Cliente c SET c.usuario = :usuario, c.senha = :senha, c.endereco = :endereco, c.enderecoEntrega = :enderecoEntrega, c.cpf = :cpf, c.email = :email WHERE c.id = :id")
+	void atualizarCliente(Integer id, String usuario, String senha, String endereco, String email, String enderecoEntrega, String cpf);
 
 }

@@ -28,7 +28,9 @@ const SettingsScreen = () => {
       senha: e.target.elements.senha.value,
       endereco: e.target.elements.endereco.value,
       email: e.target.elements.email.value,
-      is_admin: false
+      is_admin: false,
+      enderecoEntrega: e.target.elements.enderecoEntrega.value,
+      cpf: e.target.elements.cpf.value,
     };
 
     let response = null
@@ -81,12 +83,34 @@ const SettingsScreen = () => {
           />
         </div>
         <div style={styles.formGroup}>
+          <label htmlFor="cpf" style={styles.label}>CPF:</label>
+          <input
+            type="text"
+            id="cpf"
+            name="cpf"
+            value={user.user.cpf || ''}
+            onChange={handleChange}
+            style={styles.input}
+          />
+        </div>
+        <div style={styles.formGroup}>
           <label htmlFor="endereco" style={styles.label}>Endereço:</label>
           <input
             type="text"
             id="endereco"
             name="endereco"
             value={user.user.endereco || ''}
+            onChange={handleChange}
+            style={styles.input}
+          />
+        </div>
+        <div style={styles.formGroup}>
+          <label htmlFor="enderecoEntrega" style={styles.label}>Endereço de entrega:</label>
+          <input
+            type="text"
+            id="enderecoEntrega"
+            name="enderecoEntrega"
+            value={user.user.enderecoEntrega || ''}
             onChange={handleChange}
             style={styles.input}
           />

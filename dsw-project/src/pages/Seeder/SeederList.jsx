@@ -31,7 +31,7 @@ const SeederList = ({ data }) => {
                     const primeiraLetraMaiuscula = lowercaseString.charAt(0).toUpperCase() + lowercaseString.slice(1);
 
                     const nomeCamisa = 'Camiseta ' + corItem.toLowerCase() + ' ' + (tipoItem == 'F' ? 'feminina' : 'masculina')
-                    const descricao = nomeCamisa+': estilo e conforto em uma única peça. Tecido de alta qualidade,' +
+                    const descricao = nomeCamisa + ': estilo e conforto em uma única peça. Tecido de alta qualidade,' +
                         ' design elegante e versátil. Perfeita para qualquer ocasião, do casual ao formal. ' +
                         'Ajuste impecável e durabilidade excepcional.'
 
@@ -60,8 +60,10 @@ const SeederList = ({ data }) => {
         const usuario = `${nome.toLowerCase()}`;
         const senha = '123123';
         const is_admin = isAdmin;
-        const endereco = 'Endereço de exemplo';
+        const endereco = 'Endereço de moradia';
+        const enderecoEntrega = 'Endereço de entrega';
         const email = `${usuario}@example.com`;
+        const cpf = Math.floor(Math.random() * 90000000000) + 10000000000;
 
         const data = {
             usuario,
@@ -69,6 +71,8 @@ const SeederList = ({ data }) => {
             is_admin,
             endereco,
             email,
+            enderecoEntrega,
+            cpf
         };
 
         try {

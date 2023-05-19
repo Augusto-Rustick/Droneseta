@@ -32,7 +32,6 @@ const CartScreen = () => {
         const url = 'http://localhost:8080/cartao/listUser/' + user.user.id
         const response = await axios.get(url);
         setCartoes(response.data);
-        console.log(response.data)
       } catch (error) {
         console.error(error);
       }
@@ -69,17 +68,17 @@ const CartScreen = () => {
         return;
       }
 
-      // const ordersPromises = cartItems.map(item =>
-      //   axios.post('http://localhost:8080/pedido/insert', {
-      //     id: item.id,
-      //     cliente: item.cliente,
-      //     produto: item.produto,
-      //     quantidade: item.quantidade,
-      //     situacao: 2
-      //   })
-      // );
+      const ordersPromises = cartItems.map(item =>
+        axios.post('http://localhost:8080/pedido/insert', {
+          id: item.id,
+          cliente: item.cliente,
+          produto: item.produto,
+          quantidade: item.quantidade,
+          situacao: 2
+        })
+      );
 
-      // await Promise.all(ordersPromises);
+      await Promise.all(ordersPromises);
       setPurchaseData({ cartItems, totalPrice, selectedCard });
       setPurchaseCompleted(true);
     } catch (error) {

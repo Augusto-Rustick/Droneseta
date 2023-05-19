@@ -17,7 +17,7 @@ const PurchaseSummaryScreen = ({ purchaseData }) => {
       </ul>
       <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
       <p style={styles.selectedCard}>Cartão selecionado: {selectedCard}</p>
-      <p style={styles.selectedCard}>Endereço de entrega: {user.user.endereco}</p>
+      <p style={styles.selectedCard}>Endereço de entrega: {user.user.enderecoEntrega}</p>
     </div>
   );
 };

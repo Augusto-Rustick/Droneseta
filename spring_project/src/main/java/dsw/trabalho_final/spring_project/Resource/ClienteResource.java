@@ -41,11 +41,11 @@ public class ClienteResource {
 		cliente.setSenha(clienteAtualizado.getSenha());
 		cliente.setEndereco(clienteAtualizado.getEndereco());
 		cliente.setEmail(clienteAtualizado.getEmail());
+		cliente.setCpf(clienteAtualizado.getCpf());
+		cliente.setEnderecoEntrega(clienteAtualizado.getEnderecoEntrega());
 		Cliente clienteFinalizado = repo.save(cliente);
 		return ResponseEntity.ok(clienteFinalizado);
 	}
-
-
 
 	@GetMapping("/cliente/list")
 	public List<Cliente> allCliente() {
