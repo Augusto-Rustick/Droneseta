@@ -35,6 +35,11 @@ public class PedidoResource {
 		return repo.findByClienteId(id);
 	}
 
+	@GetMapping("/pedido/listBySituacao/{situacao}")
+	public List<Pedido> allPedidoBySituacao(@PathVariable Integer situacao) {
+		return repo.findBySituacao(situacao);
+	}
+
 	@PutMapping("/pedido/update/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void atualizarSituacaoPedido(@PathVariable Integer id) {

@@ -6,7 +6,8 @@ import Register from "../../pages/Register/Register";
 import useAuth from "../../hooks/useAuth";
 import Seeder from "../../pages/Seeder/Seeder";
 import Produto from "../../pages/Produto/Produto";
-import Carrinho from "../../pages/Carrinho/Carrinho";
+import Carrinho from "../../pages/Pedido/Carrinho";
+import Pedido from "../../pages/Pedido/Pedido";
 import Configuracoes from "../../pages/Configuracoes/Configuracoes";
 import Cartao from "../../pages/Cartao/Cartao";
 import CartaoCadastro from "../../pages/Cartao/CartaoCadastro";
@@ -41,6 +42,7 @@ function AppRoutes() {
             <Route path="/seeder" element={<Seeder />} />
             <Route path="/produto" element={<Produto />} />
             <Route path="/carrinho" element={<Carrinho />} />
+            <Route path="/pedido" element={<Pedido />} />
             <Route path="/configuracoes" element={<Configuracoes />} />
             <Route path="/cartao" element={<Cartao />} />
             <Route path="/cartao-cadastro" element={<CartaoCadastro />} />

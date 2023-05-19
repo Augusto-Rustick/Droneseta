@@ -12,6 +12,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
    @Query("SELECT p FROM Pedido p WHERE p.situacao = 1 AND p.cliente = :clienteId")
    List<Pedido> findByClienteId(@Param("clienteId") Integer clienteId);
 
+   @Query("SELECT p FROM Pedido p WHERE p.situacao = :situacao")
+   List<Pedido> findBySituacao(@Param("situacao") Integer situacao);
+
    @Query("SELECT p, prod FROM Pedido p JOIN p.produto prod WHERE p.cliente = 1")
    List<?> findByClienteIdWithProduto(@Param("clienteId") Integer clienteId);
 

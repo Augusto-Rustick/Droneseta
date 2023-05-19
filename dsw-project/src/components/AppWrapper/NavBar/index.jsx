@@ -70,7 +70,7 @@ function NavBarOffCanvas() {
                         handleDissmis();
                       }}
                       as={Link}
-                      to="/orders"
+                      to="/pedido"
                     >
                       Pedidos
                     </Nav.Link>
