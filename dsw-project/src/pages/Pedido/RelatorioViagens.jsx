@@ -24,7 +24,6 @@ const RelatorioViagens = ({ entregaData }) => {
           </ul>
         </div>
       ))}
-      <p>Compra finalizada com sucesso!</p>
       <button onClick={handleRedirectHome} style={styles.button}>Ir para a Home</button>
     </div>
   );

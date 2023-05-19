@@ -21,4 +21,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
    @Modifying
    @Query("UPDATE Pedido p SET p.situacao = 2 WHERE p.id = :id")
    void atualizarSituacaoPedido(Integer id);
+
+   @Modifying
+   @Query("UPDATE Pedido p SET p.situacao = 3 WHERE p.situacao = 2")
+   void atualizarFinalizaPedido();
+
 }

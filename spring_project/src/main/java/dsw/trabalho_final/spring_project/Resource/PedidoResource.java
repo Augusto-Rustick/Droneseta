@@ -46,6 +46,12 @@ public class PedidoResource {
 		repo.atualizarSituacaoPedido(id);
 	}
 
+	@PostMapping("/pedido/finalizaPedidos")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void finalizaSituacaoPedido() {
+		repo.atualizarFinalizaPedido();
+	}
+
 	@GetMapping("/pedido/get/{id}")
 	public ResponseEntity<?> getPedido(@PathVariable Integer id) {
 		Optional<Pedido> pedidoOptional = repo.findById(id);

@@ -62,10 +62,26 @@ const CartScreen = () => {
       }
     }
 
-    setEntregaData(viagens);
-    setEntregaCompleted(true);
+      try {
+        const ordersPromises = pedidos.map(item =>
+          axios.post('http://localhost:8080/pedido/insert', {
+            id: item.id,
+            cliente: item.cliente,
+            produto: item.produto,
+            quantidade: item.quantidade,
+            situacao: 3
+          })
+        );
+  
+        await Promise.all(ordersPromises);
+      } catch (error) {
+        console.error('Erro ao entregar os pedidos:', error);
+      }finally{
+        setEntregaData(viagens);
+        setEntregaCompleted(true);
+        alert('Entrega finalizada com sucesso!');
+      }
 
-    alert('Compra finalizada com sucesso!');
   };
 
 
@@ -76,29 +92,29 @@ const CartScreen = () => {
         <RelatorioViagens entregaData={entregaData} />
       ) : (
         <>
-        {pedidos.length === 0 ? (
-          <p style={styles.emptyMessage}>O carrinho está vazio.</p>
-        ) : (
-          <>
-            <ul style={styles.cartList}>
-              {pedidos.map(item => (
-                <li key={item.id} style={styles.cartItem}>
-                  <span style={styles.productCode}>Código do Produto: {item.produto}</span>
-                  <span style={styles.productCode}>Cliente: {item.cliente}</span>
-                  <span style={styles.quantity}>Quantidade: {item.quantidade}</span>
-                </li>
-              ))}
-            </ul>
-            <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
-            <button
-              style={styles.entregaButton}
-              onClick={handleFinalizarEntrega}
-            >
-              Entregar
-            </button>
-          </>
-        )}
-      </>
+          {pedidos.length === 0 ? (
+            <p style={styles.emptyMessage}>Não existem pedidos pendentes.</p>
+          ) : (
+            <>
+              <ul style={styles.cartList}>
+                {pedidos.map(item => (
+                  <li key={item.id} style={styles.cartItem}>
+                    <span style={styles.productCode}>Código do Produto: {item.produto}</span>
+                    <span style={styles.productCode}>Cliente: {item.cliente}</span>
+                    <span style={styles.quantity}>Quantidade: {item.quantidade}</span>
+                  </li>
+                ))}
+              </ul>
+              <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
+              <button
+                style={styles.entregaButton}
+                onClick={handleFinalizarEntrega}
+              >
+                Entregar
+              </button>
+            </>
+          )}
+        </>
       )}
     </div>
   );
