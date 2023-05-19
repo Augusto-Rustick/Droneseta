@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PurchaseSummaryScreen from './PurchaseSummaryScreen';
 
 const CartScreen = () => {
   const [cartItems, setCartItems] = useState([]);
   const [cartoes, setCartoes] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedCard, setSelectedCard] = useState('');
+  const [purchaseCompleted, setPurchaseCompleted] = useState(false);
+  const [purchaseData, setPurchaseData] = useState({});
   const user = JSON.parse(localStorage.getItem("user_logged"));
 
   useEffect(() => {
@@ -29,6 +32,7 @@ const CartScreen = () => {
         const url = 'http://localhost:8080/cartao/listUser/' + user.user.id
         const response = await axios.get(url);
         setCartoes(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error(error);
       }
@@ -77,6 +81,8 @@ const CartScreen = () => {
       );
 
       await Promise.all(ordersPromises);
+      setPurchaseData({ cartItems, totalPrice, selectedCard });
+      setPurchaseCompleted(true);
     } catch (error) {
       console.error('Erro ao criar pedidos:', error);
     }
@@ -86,41 +92,47 @@ const CartScreen = () => {
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>Carrinho de Compras</h2>
-      {cartItems.length === 0 ? (
-        <p style={styles.emptyMessage}>O carrinho está vazio.</p>
+      {purchaseCompleted ? (
+        <PurchaseSummaryScreen purchaseData={purchaseData} />
       ) : (
         <>
-          <ul style={styles.cartList}>
-            {cartItems.map(item => (
-              <li key={item.id} style={styles.cartItem}>
-                <span style={styles.productCode}>Código do Produto: {item.produto}</span>
-                <span style={styles.quantity}>Quantidade: {item.quantidade}</span>
-                <button
-                  style={styles.removeButton}
-                  onClick={() => handleRemoveFromCart(item.id)}
-                >
-                  Remover do Carrinho
-                </button>
-              </li>
-            ))}
-          </ul>
-          <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
-          <select
-            value={selectedCard}
-            onChange={(e) => setSelectedCard(e.target.value)}
-            style={styles.cardSelect}
-          >
-            <option value="">Selecione um cartão</option>
-            <option value="cartao1">Cartão 1</option>
-            <option value="cartao2">Cartão 2</option>
-            <option value="cartao3">Cartão 3</option>
-          </select>
-          <button
-            style={styles.finalizeButton}
-            onClick={handleFinalizePurchase}
-          >
-            Finalizar Compra
-          </button>
+          {cartItems.length === 0 ? (
+            <p style={styles.emptyMessage}>O carrinho está vazio.</p>
+          ) : (
+            <>
+              <ul style={styles.cartList}>
+                {cartItems.map(item => (
+                  <li key={item.id} style={styles.cartItem}>
+                    <span style={styles.productCode}>Código do Produto: {item.produto}</span>
+                    <span style={styles.quantity}>Quantidade: {item.quantidade}</span>
+                    <button
+                      style={styles.removeButton}
+                      onClick={() => handleRemoveFromCart(item.id)}
+                    >
+                      Remover do Carrinho
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
+              <select
+                value={selectedCard}
+                onChange={(e) => setSelectedCard(e.target.value)}
+                style={styles.cardSelect}
+              >
+                <option value="">Selecione um cartão</option>
+                {cartoes.map(cartao => (
+                  <option value={cartao.id} key={cartao.id}>{cartao.numero}</option>
+                ))}
+              </select>
+              <button
+                style={styles.finalizeButton}
+                onClick={handleFinalizePurchase}
+              >
+                Finalizar Compra
+              </button>
+            </>
+          )}
         </>
       )}
     </div>
