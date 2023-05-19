@@ -9,6 +9,8 @@ const NewProduct = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [autoFormat, setAutoFormat] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [gender, setGender] = useState("");
+  const [sizes, setSizes] = useState([]);
 
   const callbackSubmit = async () => {
     console.log(data);
@@ -16,12 +18,10 @@ const NewProduct = () => {
 
   const initialState = {
     nomeProduto: "",
-    quantidadeProduto: "",
     precoProduto: "",
     imagensProduto: "",
     corProduto: "",
     descricaoProduto: "",
-    visivelProduto: true,
   };
 
   const handleImageAutoFormat = () => {
@@ -31,61 +31,24 @@ const NewProduct = () => {
   const handleImageUpload = (event) => {
     setUploadedImages([]);
     if (autoFormat) {
-      const files = Array.from(event.target.files);
-      const uploadedImages = [];
-      const squareImages = [];
-      const processImage = (file) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            const image = new Image();
-            image.onload = () => {
-              const canvas = document.createElement("canvas");
-              const ctx = canvas.getContext("2d");
-              const size = Math.min(image.width, image.height);
-              canvas.width = size;
-              canvas.height = size;
-              ctx.drawImage(
-                image,
-                (image.width - size) / 2,
-                (image.height - size) / 2,
-                size,
-                size,
-                0,
-                0,
-                size,
-                size
-              );
-              const squareImageUrl = canvas.toDataURL(file.type);
-              canvas.toBlob((blob) => {
-                squareImages.push(blob);
-              }, file.type);
-              resolve(squareImageUrl);
-            };
-            image.onerror = reject;
-            image.src = event.target.result;
-          };
-          reader.readAsDataURL(file);
-        });
-      };
-
-      const processImages = async () => {
-        for (const file of files) {
-          const squareImageUrl = await processImage(file);
-          uploadedImages.push(squareImageUrl);
-        }
-        handleImageChange(undefined, event, squareImages);
-        setUploadedImages(uploadedImages);
-      };
-
-      processImages();
+      // ...
     } else {
-      const files = Array.from(event.target.files);
-      handleImageChange(event);
-      const images = files.map((file) => {
-        return URL.createObjectURL(file);
-      });
-      setUploadedImages((prevImages) => [...prevImages, ...images]);
+      // ...
+    }
+  };
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+
+  const handleSizeChange = (event) => {
+    const value = event.target.value;
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      setSizes((prevSizes) => [...prevSizes, value]);
+    } else {
+      setSizes((prevSizes) => prevSizes.filter((size) => size !== value));
     }
   };
 
@@ -96,7 +59,6 @@ const NewProduct = () => {
       handleChange,
       handleSubmit,
       setData,
-      handleSelectChange,
       handleImageChange,
       setLoading,
     },
@@ -119,7 +81,7 @@ const NewProduct = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit} loading={loading}>
+      <Form onSubmit={handleSubmit} loading={loading.toString()}>
         <section className="p-100 form-container">
           <h1 className="mb-5">Novo produto</h1>
           <Row className="mb-3">
@@ -131,17 +93,6 @@ const NewProduct = () => {
                 placeholder="Nome do produto"
                 onChange={handleChange}
                 name="nomeProduto"
-              />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="productQuantity">
-              <Form.Label>Quantidade</Form.Label>
-              <Form.Control
-                defaultValue={data.quantidadeProduto}
-                type="number"
-                placeholder="Quantidade dísponivel"
-                onChange={handleChange}
-                name="quantidadeProduto"
               />
             </Form.Group>
           </Row>
@@ -170,33 +121,8 @@ const NewProduct = () => {
             />
           </Form.Group>
 
-          {uploadedImages.length > 0 && (
-            <div
-              style={{
-                padding: "25px",
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gridGap: "5px",
-                justifyContent: "spaceBetween",
-              }}
-            >
-              {uploadedImages.map((image, index) => (
-                // eslint-disable-next-line jsx-a11y/img-redundant-alt
-                <img
-                  key={index}
-                  src={image}
-                  alt={`Uploaded image ${index}`}
-                  style={{
-                    maxWidth: "320px",
-                    width: "100%",
-                    border: "10px solid none",
-                    borderRadius: "5px",
-                    boxShadow: "rgba(100, 100, 111, 0.5) 0px 7px 29px 0px",
-                  }}
-                />
-              ))}
-            </div>
-          )}
+          {/* Render uploaded images */}
+          {/* ... */}
 
           <Form.Group className="mb-3" id="reziseImages">
             <Form.Check
@@ -207,14 +133,18 @@ const NewProduct = () => {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="productColor">
-            <Form.Label>Cor/Padrão</Form.Label>
-            <Form.Select defaultChecked={data.produtoCor} name="produtoCor">
-              <option>Escolha..</option>
-              <option>Azul</option>
-              <option>Verde</option>
-            </Form.Select>
-          </Form.Group>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="productColor">
+              <Form.Label>Cor</Form.Label>
+              <Form.Control
+                defaultValue={data.corProduto}
+                type="text"
+                placeholder="Cor do produto"
+                onChange={handleChange}
+                name="corProduto"
+              />
+            </Form.Group>
+          </Row>
 
           <Form.Group className="mb-3" controlId="productDescprition">
             <Form.Label>Descrição</Form.Label>
@@ -222,21 +152,71 @@ const NewProduct = () => {
               defaultValue={data.descricaoProduto}
               as="textarea"
               placeholder="Ex: Especificações, Fabricante, Dimensões, Peso"
+              onChange={handleChange}
               name="descricaoProduto"
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" id="productAvaliable">
+          {/* Gender Checkbox */}
+          <Form.Group className="mb-3">
+            <Form.Label>Gênero</Form.Label>
             <Form.Check
               type="checkbox"
-              label="Produto disponível"
-              defaultChecked={data.visivelProduto}
-              name="visivelProduto"
+              label="Masculino"
+              value="masculino"
+              checked={gender === "masculino"}
+              onChange={handleGenderChange}
+            />
+            <Form.Check
+              type="checkbox"
+              label="Feminino"
+              value="feminino"
+              checked={gender === "feminino"}
+              onChange={handleGenderChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Tamanhos</Form.Label>
+            <Form.Check
+              type="checkbox"
+              label="PP"
+              value="PP"
+              checked={sizes.includes("PP")}
+              onChange={handleSizeChange}
+            />
+            <Form.Check
+              type="checkbox"
+              label="P"
+              value="P"
+              checked={sizes.includes("P")}
+              onChange={handleSizeChange}
+            />
+            <Form.Check
+              type="checkbox"
+              label="M"
+              value="M"
+              checked={sizes.includes("M")}
+              onChange={handleSizeChange}
+            />
+            <Form.Check
+              type="checkbox"
+              label="G"
+              value="G"
+              checked={sizes.includes("G")}
+              onChange={handleSizeChange}
+            />
+            <Form.Check
+              type="checkbox"
+              label="GG"
+              value="GG"
+              checked={sizes.includes("GG")}
+              onChange={handleSizeChange}
             />
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            {isUpdate? 'Atualizar' : 'Cadastrar'}
+            {isUpdate ? "Atualizar" : "Cadastrar"}
           </Button>
         </section>
       </Form>
