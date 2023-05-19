@@ -75,8 +75,7 @@ const CartScreen = () => {
           cliente: item.cliente,
           produto: item.produto,
           quantidade: item.quantidade,
-          situacao: 2,
-          cartao: selectedCard,
+          situacao: 2
         })
       );
 
@@ -122,7 +121,7 @@ const CartScreen = () => {
               >
                 <option value="">Selecione um cartão</option>
                 {cartoes.map(cartao => (
-                  <option value={cartao.id} key={cartao.id}>{cartao.numero}</option>
+                  <option value={cartao.numero} key={cartao.id}>{cartao.numero}</option>
                 ))}
               </select>
               <button
