@@ -67,9 +67,61 @@ const NewProduct = () => {
   const handleImageUpload = (event) => {
     setUploadedImages([]);
     if (autoFormat) {
-      // ...
+      const files = Array.from(event.target.files);
+      const uploadedImages = [];
+      const squareImages = [];
+      const processImage = (file) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const image = new Image();
+            image.onload = () => {
+              const canvas = document.createElement("canvas");
+              const ctx = canvas.getContext("2d");
+              const size = Math.min(image.width, image.height);
+              canvas.width = size;
+              canvas.height = size;
+              ctx.drawImage(
+                image,
+                (image.width - size) / 2,
+                (image.height - size) / 2,
+                size,
+                size,
+                0,
+                0,
+                size,
+                size
+              );
+              const squareImageUrl = canvas.toDataURL(file.type);
+              canvas.toBlob((blob) => {
+                squareImages.push(blob);
+              }, file.type);
+              resolve(squareImageUrl);
+            };
+            image.onerror = reject;
+            image.src = event.target.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      };
+
+      const processImages = async () => {
+        for (const file of files) {
+          const squareImageUrl = await processImage(file);
+          uploadedImages.push(squareImageUrl);
+        }
+        handleImageChange(undefined, event, squareImages);
+        setUploadedImages(uploadedImages);
+      };
+
+      processImages();
     } else {
-      // ...
+      const files = Array.from(event.target.files);
+      handleImageChange(event);
+      const images = files.map((file) => {
+        return URL.createObjectURL(file);
+      });
+      setUploadedImages((prevImages) => [...prevImages, ...images]);
     }
   };
 
