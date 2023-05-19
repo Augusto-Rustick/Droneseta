@@ -7,6 +7,7 @@ const Seeder = () => {
         { id: 2, text: 'Povoar clientes  ', buttonText: 'Povoar' },
         { id: 3, text: 'Povoar admins    ', buttonText: 'Povoar' },
         { id: 4, text: 'Povoar pedidos  ', buttonText: 'Povoar' },
+        { id: 5, text: 'Povoar Cartões  ', buttonText: 'Povoar' },
     ];
 
     const handleButtonClick = (id) => {

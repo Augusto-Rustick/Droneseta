@@ -27,10 +27,13 @@ public class Produto {
    @NotNull
    private String tipo;
 
+   @NotNull
+   private String descricao;
+
    public Produto() {
    }
 
-   public Produto(Integer id, String nome, String codigo, String tamanho, double preco, String tipo) {
+   public Produto(Integer id, String nome, String codigo, String tamanho, double preco, String tipo, String descricao) {
       super();
       this.id = id;
       this.nome = nome;
@@ -38,6 +41,7 @@ public class Produto {
       this.tamanho = tamanho;
       this.preco = preco;
       this.tipo = tipo;
+      this.descricao = descricao;
    }
 
    public Integer getId() {
@@ -88,6 +92,14 @@ public class Produto {
       this.tipo = tipo;
    }
 
+   public String getDescricao() {
+      return descricao;
+   }
+
+   public void setDescricao(String descricao) {
+      this.descricao = descricao;
+   }
+
    @Override
    public String toString() {
       return "Produto{" +
@@ -97,6 +109,7 @@ public class Produto {
               ", tamanho='" + tamanho + '\'' +
               ", preco=" + preco +
               ", tipo='" + tipo + '\'' +
+              ", descricao='" + descricao + '\'' +
               '}';
    }
 }

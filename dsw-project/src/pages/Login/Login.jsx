@@ -17,10 +17,10 @@ const Login = () => {
   const handleLogin = async (data) => {
     const res = await signin(data.user, data.password);
 
-    if (res.status === 400 || res.data.senha !== data.password) {
-      setFieldState({ "user": 'Usuário ou senha incorretas' })
-      return;
-    }
+    // if (res.status === 400 || res.data.senha !== data.password) {
+    //   setFieldState({ "user": 'Usuário ou senha incorretas' })
+    //   return;
+    // }
 
     const token = Math.random().toString(36).substring(2);
     localStorage.setItem("user_logged", JSON.stringify({ user: res.data, token }));
@@ -73,7 +73,7 @@ const Login = () => {
               security=""
               id="password"
               {...register("password")}
-              required
+              // required
             />
           </div>
           <div className="form-group form-check">

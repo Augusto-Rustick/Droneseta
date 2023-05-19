@@ -20,6 +20,8 @@ const SeederList = ({ data }) => {
             }
         };
 
+        var jaFoiUma = false
+
         tipo.forEach((tipoItem) => {
             tamanho.forEach((tamanhoItem) => {
                 cor.forEach((corItem) => {
@@ -28,16 +30,27 @@ const SeederList = ({ data }) => {
                     const lowercaseString = corItem.toLowerCase();
                     const primeiraLetraMaiuscula = lowercaseString.charAt(0).toUpperCase() + lowercaseString.slice(1);
 
+                    const nomeCamisa = 'Camiseta ' + corItem.toLowerCase() + ' ' + (tipoItem == 'F' ? 'feminina' : 'masculina')
+                    const descricao = nomeCamisa+': estilo e conforto em uma única peça. Tecido de alta qualidade,' +
+                        ' design elegante e versátil. Perfeita para qualquer ocasião, do casual ao formal. ' +
+                        'Ajuste impecável e durabilidade excepcional.'
+
+
                     const data = {
                         nome: `Camisa ${primeiraLetraMaiuscula}`,
                         tamanho: tamanhoItem,
                         preco: preco,
                         codigo: codigo,
-                        tipo: tipoItem
+                        tipo: tipoItem,
+                        descricao
                     };
 
                     quantidade++;
                     insertProduto(data);
+                    if (!jaFoiUma) {
+                        console.log(data)
+                        jaFoiUma = true;
+                    }
                 });
             });
         });
@@ -87,7 +100,7 @@ const SeederList = ({ data }) => {
     const handleClickButton4 = async () => {
         try {
             const userId = 1;
-            const productIds = [16, 17, 18, 20, 21, 22]; 
+            const productIds = [16, 17, 18, 20, 21, 22];
 
             const ordersPromises = productIds.map(productId =>
                 axios.post('http://localhost:8080/pedido/insert', {
@@ -101,6 +114,32 @@ const SeederList = ({ data }) => {
             await Promise.all(ordersPromises);
         } catch (error) {
             console.error('Erro ao criar pedidos:', error);
+        }
+    };
+
+    const handleClickButton5 = async () => {
+        const userId = 1;
+        var numero = '12345'
+        var cvc = '12'
+        var validade = '12/2'
+        const url = 'http://localhost:8080/cartao/insert';
+
+        try {
+            for (let i = 0; i < 5; i++) {
+                numero += i
+                cvc += i
+                validade += i
+
+                const data = {
+                    numero,
+                    cvc,
+                    validade,
+                    cliente: userId
+                }
+                const response = await axios.post(url, data);
+            }
+        } catch (error) {
+            console.error('Erro ao criar cartões:', error);
         }
     };
 
@@ -138,6 +177,9 @@ const SeederList = ({ data }) => {
                         )}
                         {item.id === 4 && (
                             <button onClick={handleClickButton4}>{item.buttonText}</button>
+                        )}
+                        {item.id === 5 && (
+                            <button onClick={handleClickButton5}>{item.buttonText}</button>
                         )}
                     </div>
                 </div>

@@ -63,16 +63,6 @@ function NavBarOffCanvas() {
                   Produtos
                 </Nav.Link>
                 <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
-                <Nav.Link
-                  onClick={() => {
-                    handleDissmis();
-                  }}
-                  as={Link}
-                  to="/offers"
-                >
-                  Ofertas
-                </Nav.Link>
-                <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
                 {(user && user.user.is_admin) && (
                   <>
                     <Nav.Link
@@ -97,18 +87,28 @@ function NavBarOffCanvas() {
                     >
                       Carrinho
                     </Nav.Link>
+                    <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
+                    <Nav.Link
+                      onClick={() => {
+                        handleDissmis();
+                      }}
+                      as={Link}
+                      to="/configuracoes"
+                    >
+                      Configurações
+                    </Nav.Link>
+                    <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
+                    <Nav.Link
+                      onClick={() => {
+                        handleDissmis();
+                      }}
+                      as={Link}
+                      to="/cartao"
+                    >
+                      Cartões
+                    </Nav.Link>
                   </>
                 )}
-                <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
-                <Nav.Link
-                  onClick={() => {
-                    handleDissmis();
-                  }}
-                  as={Link}
-                  to="/configuracoes"
-                >
-                  Configurações
-                </Nav.Link>
                 <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
                 <Access
                   onClick={() => {

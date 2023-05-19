@@ -8,6 +8,8 @@ import Seeder from "../../pages/Seeder/Seeder";
 import Produto from "../../pages/Produto/Produto";
 import Carrinho from "../../pages/Carrinho/Carrinho";
 import Configuracoes from "../../pages/Configuracoes/Configuracoes";
+import Cartao from "../../pages/Cartao/Cartao";
+import CartaoCadastro from "../../pages/Cartao/CartaoCadastro";
 
 
 const AppWrapper = lazy(() => import("../AppWrapper/AppWrapper"));
@@ -38,22 +40,18 @@ function AppRoutes() {
             <Route path="/dev" element={<DevMenu />} />
             <Route path="/seeder" element={<Seeder />} />
             <Route path="/produto" element={<Produto />} />
-            <Route
-              path="/produto/novo"
-              element={<ComponentHandler comp={<NewProduct />} />}
-            />
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/configuracoes" element={<Configuracoes />} />
+            <Route path="/cartao" element={<Cartao />} />
+            <Route path="/cartao-cadastro" element={<CartaoCadastro />} />
+            <Route path="/register" element={<Register />} />
+
+            <Route path="/produto/novo" element={<ComponentHandler comp={<NewProduct />} />} />
             
             <Route
               path="/about"
               element={<ComponentHandler comp={<p>Teste</p>} />}
             />
-            <Route
-              path="/offers"
-              element={<ComponentHandler comp={<p>Teste</p>} />}
-            />
-            <Route path="/register" element={<Register />} />
           </Route>
         </Routes>
       </BrowserRouter>

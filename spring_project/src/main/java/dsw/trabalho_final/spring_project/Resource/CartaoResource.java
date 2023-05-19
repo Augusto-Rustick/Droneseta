@@ -3,6 +3,7 @@ package dsw.trabalho_final.spring_project.Resource;
 import java.util.List;
 import java.util.Optional;
 
+import dsw.trabalho_final.spring_project.Entity.Pedido;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,6 +37,12 @@ public class CartaoResource {
 	public List<Cartao> allCartao() {
 		return repo.findAll();
 	}
+
+	@GetMapping("/cartao/listUser/{id}")
+	public List<Cartao> allCartaoByCliente(@PathVariable Integer id) {
+		return repo.findByClienteId(id);
+	}
+
 
 	@GetMapping("/cartao/get/{id}")
 	public ResponseEntity<?> getCartao(@PathVariable Integer id) {

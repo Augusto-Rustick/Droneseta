@@ -16,7 +16,7 @@ const ProductScreen = () => {
                 // Verificar se há códigos duplicados
                 const uniqueCamisas = [];
                 const seenCodes = new Set();
-
+                console.log(data)
                 for (const camisa of data) {
                     camisa.codigo = camisa.codigo.substring(2); // Ignorar os dois primeiros caracteres
 
@@ -88,6 +88,11 @@ const ProductScreen = () => {
             return;
         }
 
+        if (quantidade > 10) {
+            alert('O limite de quantidade é de 10 camisas.')
+            return
+        }
+
         tamanho = tamanho.length === 1 ? `_${tamanho}` : tamanho;
         const camisaEncontrada = camisasOriginais.find(
             camisa => camisa.tamanho === tamanho && camisa.codigo === codigo
@@ -119,7 +124,7 @@ const ProductScreen = () => {
                         />
                         <div style={styles.infoContainer}>
                             <p style={styles.nome}>{camisa.nome + ((camisa.codigo.startsWith("F")) ? " Feminina" : " Masculina")}</p>
-                            <p style={styles.modelo}>Modelo: {camisa.modelo}</p>
+                            <p style={styles.descricao}>Descricao: {camisa.descricao}</p>
                             <p style={styles.preco}>Preço: R$ {camisa.preco}</p>
                             {user_logged && (
                                 <>
@@ -199,7 +204,7 @@ const styles = {
         fontWeight: 'bold',
         marginBottom: '5px',
     },
-    modelo: {
+    descricao: {
         marginBottom: '5px',
     },
     preco: {
