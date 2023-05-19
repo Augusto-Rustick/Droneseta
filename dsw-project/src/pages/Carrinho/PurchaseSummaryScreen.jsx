@@ -2,6 +2,7 @@ import React from 'react';
 
 const PurchaseSummaryScreen = ({ purchaseData }) => {
   const { cartItems, totalPrice, selectedCard } = purchaseData;
+  const user = JSON.parse(localStorage.getItem("user_logged"));
 
   return (
     <div style={styles.container}>
@@ -16,6 +17,7 @@ const PurchaseSummaryScreen = ({ purchaseData }) => {
       </ul>
       <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
       <p style={styles.selectedCard}>Cartão selecionado: {selectedCard}</p>
+      <p style={styles.selectedCard}>Endereço de entrega: {user.user.endereco}</p>
     </div>
   );
 };
