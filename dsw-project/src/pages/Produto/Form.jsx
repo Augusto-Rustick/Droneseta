@@ -8,9 +8,7 @@ import useForm from "../../hooks/useForm";
 const NewProduct = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [autoFormat, setAutoFormat] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(false);
   const [gender, setGender] = useState("");
-  const [sizes, setSizes] = useState([]);
 
   const callbackSubmit = async () => {
     console.log(data);
@@ -22,6 +20,7 @@ const NewProduct = () => {
     imagensProduto: "",
     corProduto: "",
     descricaoProduto: "",
+    gender: "",
   };
 
   const handleImageAutoFormat = () => {
@@ -38,50 +37,24 @@ const NewProduct = () => {
   };
 
   const handleGenderChange = (event) => {
-    setGender(event.target.value);
-  };
-
-  const handleSizeChange = (event) => {
-    const value = event.target.value;
-    const isChecked = event.target.checked;
-
-    if (isChecked) {
-      setSizes((prevSizes) => [...prevSizes, value]);
-    } else {
-      setSizes((prevSizes) => prevSizes.filter((size) => size !== value));
-    }
+    const selectedGender = event.target.value;
+    setGender(selectedGender);
+    handleChange(event); // Atualizar o estado principal
   };
 
   const [
     {
       data,
-      loading,
       handleChange,
       handleSubmit,
-      setData,
       handleImageChange,
-      setLoading,
     },
   ] = useForm(callbackSubmit, initialState);
 
-  useEffect(() => {
-    // calc isUpdate
-
-    const fetch = async () => {
-      setLoading(true);
-      // setData();
-      setLoading(false);
-    };
-
-    if (isUpdate)
-      return () => {
-        fetch();
-      };
-  }, [isUpdate, loading, setData, setLoading]);
 
   return (
     <>
-      <Form onSubmit={handleSubmit} loading={loading.toString()}>
+      <Form onSubmit={handleSubmit}>
         <section className="p-100 form-container">
           <h1 className="mb-5">Novo produto</h1>
           <Row className="mb-3">
@@ -121,9 +94,6 @@ const NewProduct = () => {
             />
           </Form.Group>
 
-          {/* Render uploaded images */}
-          {/* ... */}
-
           <Form.Group className="mb-3" id="reziseImages">
             <Form.Check
               onClick={handleImageAutoFormat}
@@ -157,66 +127,21 @@ const NewProduct = () => {
             />
           </Form.Group>
 
-          {/* Gender Checkbox */}
-          <Form.Group className="mb-3">
-            <Form.Label>Gênero</Form.Label>
-            <Form.Check
-              type="checkbox"
-              label="Masculino"
-              value="masculino"
-              checked={gender === "masculino"}
+          <Form.Group className="mb-3" controlId="productGender">
+            <Form.Control
+              defaultValue={data.gender}
+              as="select"
               onChange={handleGenderChange}
-            />
-            <Form.Check
-              type="checkbox"
-              label="Feminino"
-              value="feminino"
-              checked={gender === "feminino"}
-              onChange={handleGenderChange}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Tamanhos</Form.Label>
-            <Form.Check
-              type="checkbox"
-              label="PP"
-              value="PP"
-              checked={sizes.includes("PP")}
-              onChange={handleSizeChange}
-            />
-            <Form.Check
-              type="checkbox"
-              label="P"
-              value="P"
-              checked={sizes.includes("P")}
-              onChange={handleSizeChange}
-            />
-            <Form.Check
-              type="checkbox"
-              label="M"
-              value="M"
-              checked={sizes.includes("M")}
-              onChange={handleSizeChange}
-            />
-            <Form.Check
-              type="checkbox"
-              label="G"
-              value="G"
-              checked={sizes.includes("G")}
-              onChange={handleSizeChange}
-            />
-            <Form.Check
-              type="checkbox"
-              label="GG"
-              value="GG"
-              checked={sizes.includes("GG")}
-              onChange={handleSizeChange}
-            />
+              name="gender"
+            >
+              <option value="">Selecione o gênero</option>
+              <option value="masculino">Masculino</option>
+              <option value="feminino">Feminino</option>
+            </Form.Control>
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            {isUpdate ? "Atualizar" : "Cadastrar"}
+            Cadastrar
           </Button>
         </section>
       </Form>
