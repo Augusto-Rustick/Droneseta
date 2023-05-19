@@ -27,20 +27,13 @@ const CartScreen = () => {
   }, []);
 
   const handleFinalizarEntrega = async () => {
-    // Ordenar os pedidos em ordem decrescente de quantidade
     const sortedPedidos = [...pedidos].sort((a, b) => b.quantidade - a.quantidade);
-
-    const capacidadeDrone = 10; // Capacidade do drone em camisetas
-    const viagens = []; // Lista de viagens realizadas pelo drone
-
-    // Percorrer os pedidos e realizar o bin packing
+    const capacidadeDrone = 10;
+    const viagens = []; 
     for (const pedido of sortedPedidos) {
       const quantidade = pedido.quantidade;
-
-      // Procurar o bin (viagem) existente com menor capacidade disponível
       let menorCapacidade = Infinity;
       let melhorViagem = null;
-
       for (const viagem of viagens) {
         const capacidadeDisponivel = capacidadeDrone - viagem.quantidadeTransportada;
         if (quantidade <= capacidadeDisponivel && capacidadeDisponivel < menorCapacidade) {
@@ -48,13 +41,10 @@ const CartScreen = () => {
           melhorViagem = viagem;
         }
       }
-
       if (melhorViagem) {
-        // Adicionar o pedido à viagem existente
         melhorViagem.pedidos.push(pedido);
         melhorViagem.quantidadeTransportada += quantidade;
       } else {
-        // Criar uma nova viagem para o pedido
         viagens.push({
           pedidos: [pedido],
           quantidadeTransportada: quantidade
