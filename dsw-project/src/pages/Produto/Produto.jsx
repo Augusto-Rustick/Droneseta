@@ -16,7 +16,6 @@ const ProductScreen = () => {
                 // Verificar se há códigos duplicados
                 const uniqueCamisas = [];
                 const seenCodes = new Set();
-                console.log(data)
                 for (const camisa of data) {
                     camisa.codigo = camisa.codigo.substring(2); // Ignorar os dois primeiros caracteres
 
@@ -124,7 +123,7 @@ const ProductScreen = () => {
                         />
                         <div style={styles.infoContainer}>
                             <p style={styles.nome}>{camisa.nome + ((camisa.codigo.startsWith("F")) ? " Feminina" : " Masculina")}</p>
-                            <p style={styles.descricao}>Descricao: {camisa.descricao}</p>
+                            <p style={styles.descricao}>{camisa.descricao}</p>
                             <p style={styles.preco}>Preço: R$ {camisa.preco}</p>
                             {user_logged && (
                                 <>

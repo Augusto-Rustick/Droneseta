@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const CartScreen = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const user = JSON.parse(localStorage.getItem("user_logged"));
 
   useEffect(() => {
@@ -10,6 +11,12 @@ const CartScreen = () => {
       try {
         const response = await axios.get('http://localhost:8080/pedido/listUser/' + user.user.id);
         setCartItems(response.data);
+
+        // Calcular o total do preço
+        const total = response.data.reduce((acc, item) => {
+          return acc + item.quantidade * 49.90;
+        }, 0);
+        setTotalPrice(total);
       } catch (error) {
         console.error(error);
       }
@@ -26,6 +33,12 @@ const CartScreen = () => {
       // Atualizar a lista de itens do carrinho
       const updatedCartItems = cartItems.filter(item => item.id !== itemId);
       setCartItems(updatedCartItems);
+
+      // Atualizar o total do preço
+      const total = updatedCartItems.reduce((acc, item) => {
+        return acc + item.quantidade * 49.90;
+      }, 0);
+      setTotalPrice(total);
     } catch (error) {
       console.error(error);
     }
@@ -71,6 +84,7 @@ const CartScreen = () => {
               </li>
             ))}
           </ul>
+          <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
           <button
             style={styles.finalizeButton}
             onClick={handleFinalizePurchase}
@@ -82,6 +96,7 @@ const CartScreen = () => {
     </div>
   );
 };
+
 const styles = {
   container: {
     maxWidth: '600px',
@@ -139,6 +154,12 @@ const styles = {
     cursor: 'pointer',
     display: 'block',
     margin: '0 auto',
+  },
+  totalPrice: {
+    textAlign: 'right',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginTop: '10px',
   },
 };
 
