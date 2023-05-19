@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import RelatorioViagens from './RelatorioViagens';
 
 const CartScreen = () => {
   const [pedidos, setPedidos] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [entregaCompleted, setEntregaCompleted] = useState(false);
+  const [entregaData, setEntregaData] = useState({});
 
   useEffect(() => {
     const fetchPedidos = async () => {
@@ -23,21 +26,21 @@ const CartScreen = () => {
     fetchPedidos();
   }, []);
 
-  const handleEntregaPurchase = async () => {
+  const handleFinalizarEntrega = async () => {
     // Ordenar os pedidos em ordem decrescente de quantidade
     const sortedPedidos = [...pedidos].sort((a, b) => b.quantidade - a.quantidade);
-  
+
     const capacidadeDrone = 10; // Capacidade do drone em camisetas
     const viagens = []; // Lista de viagens realizadas pelo drone
-  
+
     // Percorrer os pedidos e realizar o bin packing
     for (const pedido of sortedPedidos) {
       const quantidade = pedido.quantidade;
-  
+
       // Procurar o bin (viagem) existente com menor capacidade disponível
       let menorCapacidade = Infinity;
       let melhorViagem = null;
-  
+
       for (const viagem of viagens) {
         const capacidadeDisponivel = capacidadeDrone - viagem.quantidadeTransportada;
         if (quantidade <= capacidadeDisponivel && capacidadeDisponivel < menorCapacidade) {
@@ -45,7 +48,7 @@ const CartScreen = () => {
           melhorViagem = viagem;
         }
       }
-  
+
       if (melhorViagem) {
         // Adicionar o pedido à viagem existente
         melhorViagem.pedidos.push(pedido);
@@ -58,27 +61,21 @@ const CartScreen = () => {
         });
       }
     }
-  
-    // Exibir o relatório de viagens e quantidade de camisetas transportadas
-    for (let i = 0; i < viagens.length; i++) {
-      const viagem = viagens[i];
-      console.log(`Viagem ${i + 1}:`);
-      console.log(`- Quantidade de camisetas transportadas: ${viagem.quantidadeTransportada}`);
-      console.log('- Pedidos:');
-      for (const pedido of viagem.pedidos) {
-        console.log(`  - Pedido ${pedido.id}: ${pedido.quantidade} camisetas`);
-      }
-      console.log();
-    }
-  
+
+    setEntregaData(viagens);
+    setEntregaCompleted(true);
+
     alert('Compra finalizada com sucesso!');
   };
-  
+
 
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>Carrinho de Compras</h2>
-      <>
+      {entregaCompleted ? (
+        <RelatorioViagens entregaData={entregaData} />
+      ) : (
+        <>
         {pedidos.length === 0 ? (
           <p style={styles.emptyMessage}>O carrinho está vazio.</p>
         ) : (
@@ -95,13 +92,14 @@ const CartScreen = () => {
             <p style={styles.totalPrice}>Total: R${totalPrice.toFixed(2)}</p>
             <button
               style={styles.entregaButton}
-              onClick={handleEntregaPurchase}
+              onClick={handleFinalizarEntrega}
             >
               Entregar
             </button>
           </>
         )}
       </>
+      )}
     </div>
   );
 };
