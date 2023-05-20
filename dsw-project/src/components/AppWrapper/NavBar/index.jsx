@@ -84,6 +84,16 @@ function NavBarOffCanvas() {
                     >
                       Novo Produto
                     </Nav.Link>
+                    <hr style={{ marginTop: '-3px', marginBottom: '-3px', backgroundColor: 'gray', height: '5px' }} />
+                    <Nav.Link
+                      onClick={() => {
+                        handleDissmis();
+                      }}
+                      as={Link}
+                      to="/produto/trendding"
+                    >
+                      Produtos em alta
+                    </Nav.Link>
                   </>
                 )}
                 {(user && !user.user.is_admin) && (

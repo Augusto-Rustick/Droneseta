@@ -7,6 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import Seeder from "../../pages/Seeder/Seeder";
 import Produto from "../../pages/Produto/Produto";
 import Carrinho from "../../pages/Pedido/Carrinho";
+import Trendding from "../../pages/Pedido/Trendding";
 import Pedido from "../../pages/Pedido/Pedido";
 import Configuracoes from "../../pages/Configuracoes/Configuracoes";
 import Cartao from "../../pages/Cartao/Cartao";
@@ -48,11 +49,7 @@ function AppRoutes() {
             <Route path="/cartao-cadastro" element={<CartaoCadastro />} />
             <Route path="/register" element={<Register />} />
             <Route path="/produto/novo" element={<NewProduct />} />
-
-            <Route
-              path="/about"
-              element={<ComponentHandler comp={<p>Teste</p>} />}
-            />
+            <Route path="/produto/trendding" element={<Trendding />} />
           </Route>
         </Routes>
       </BrowserRouter>
